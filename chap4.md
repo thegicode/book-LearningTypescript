@@ -240,7 +240,7 @@ const poemMissmatch: Poem = {
 -   Poem 타입을 작성할 때 author 속성의 형태를 자체 별칭 객체 타입으로 추출하는 방법도 있다.
 -   중첩된 타입을 자체 타입 별칭으로 추출하면 타입스크립트의 타입 오류 메시지에 더 많은 정보를 담을 수 있다.
 
--   [pemMissmatch.ts](./chap4/pemMissmatch.ts)
+-   [poemMissmatch.ts](./chap4/poemMissmatch.ts)
 
 ```
 type Author = {
