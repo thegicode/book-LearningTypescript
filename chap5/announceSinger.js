@@ -1,0 +1,1 @@
+function announceSinger(singer, song) { }
