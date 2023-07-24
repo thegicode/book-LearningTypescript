@@ -2,9 +2,9 @@
 
 ## 1 객체 타입
 
-```
-// poet.ts
+[poet.ts](./chap4/poet.ts)
 
+```
 const poet = {
     born: 9135,
     name: "Mary Olover",
@@ -81,8 +81,9 @@ poet.end;
 -   타입스크립트의 타입 시스템은 구조적으로 타입화 structurally typed되어 있다.
 -   타입을 충족하는 모든 값을 해당 타입의 값으로 사용할 수 있다.
 
+[withName.ts](./chap4/withName.ts)
+
 ```
-// withName.ts
 
 type WithFirstName = {
     firstName: string;
@@ -115,8 +116,9 @@ let withLastName: WithLastName = hasBoth;
 
 -   객체 타입으로 애너테이션된 위치에 값을 제공할 때 타입스크립트는 값을 해당 객체 타입에 할당할 수 있는지 확인한다.
 
+-   [firstAndLastNames.ts](./chap4/firstAndLastNames.ts)
+
 ```
-// firstAndLastNames.ts
 
 type FirstAndLastNames = {
     firstName: string;
@@ -139,31 +141,31 @@ const hasOnlyOne: FirstAndLastNames = {
 
 -   객체 타입은 필수 속성 이름과 해당 속성이 예상되는 타입을 모두 지정한다.
 
-    ```
-    // timeRange.ts
+-   [timeRange.ts](./chap4/timeRange.ts)
 
-    type TimeRange = {
-        start: Date;
-    };
+          ```
 
-    const hasStartSTring: TimeRange = {
-        start: "1879-02-13",
-        // Error: Type 'string' is not assignable to type 'Date'.
-    };
+          type TimeRange = {
+              start: Date;
+          };
 
-    ```
+          const hasStartSTring: TimeRange = {
+              start: "1879-02-13",
+              // Error: Type 'string' is not assignable to type 'Date'.
+          };
 
-    -   hasStartSTring 객체의 start 속성이 Date가 아니라 string 타입이므로 타입 오류 발생
+          ```
+
+          -   hasStartSTring 객체의 start 속성이 Date가 아니라 string 타입이므로 타입 오류 발생
 
 <br>
 
 ### 2.2 초과 속성 검사
 
 -   변수가 객체 타입으로 선언되고, 초깃값에 객체 타입에서 정의된 것보다 많은 필드가 있다면 타입스크립트에서 타입 오류 발생
+-   [extraProperty.ts](./chap4/extraProperty.ts)
 
     ```
-    // extraProperty.ts
-
     type Poet = {
         born: number;
         name: string;
@@ -204,8 +206,9 @@ const hasOnlyOne: FirstAndLastNames = {
 
 ### 2.3 중첩된 객체 타입
 
+-   [poemMatch.ts](./chap4/poemMatch.ts)
+
 ```
-// poemMatch.ts
 
 type Poem = {
     author: {
@@ -237,9 +240,9 @@ const poemMissmatch: Poem = {
 -   Poem 타입을 작성할 때 author 속성의 형태를 자체 별칭 객체 타입으로 추출하는 방법도 있다.
 -   중첩된 타입을 자체 타입 별칭으로 추출하면 타입스크립트의 타입 오류 메시지에 더 많은 정보를 담을 수 있다.
 
-```
-// pemMissmatch.ts
+-   [pemMissmatch.ts](./chap4/pemMissmatch.ts)
 
+```
 type Author = {
     firstName: string;
     lastName: string;
@@ -269,9 +272,9 @@ const poemMisttMatch: Poem = {
 
 -   타입의 속성 애너테이션에서 : 앞에 ?를 추가하면 선책적 속성임을 나타낼 수 있다.
 
-```
-// book.ts
+-   [book.ts](./chap4/book.ts)
 
+```
 type Book = {
     author?: string;
     pages: number;
@@ -291,11 +294,13 @@ const missing: Book = {
 ```
 
 -   선택적 속성과 undefined를 포함한 유니언 타입의 속성 사이에는 차이가 있다.
+
     -   ?를 사용해 선택적으로 선언된 속성은 존재하지 않아도 된다.
     -   필수로 선언된 속성과 | undefined는 그 값이 undefined일지라도 반드시 존재해야 한다.
 
+-   [writers.ts](./chap4/writers.ts)
+
 ```
-// writers.ts
 
 type Writers = {
     author: string | undefined;
@@ -330,9 +335,9 @@ const missingRequired: Writers = {};
 
 ### 3.1 유추된 객체 타입 유니언
 
-```
-// poem.ts
+-   [poem.ts](./chap4/poem.ts)
 
+```
 const poem =
     Math.random() > 0.5
         ? { name: "The Double Image", pages: 7 }
@@ -365,9 +370,9 @@ poem.rhymes; // booleans | undefined
 -   poem 변수는 name을 항상 갖는 유니언 타입으로 명시적으로 작성되었다.
 -   pages와 rhymes는 항상 존재한다는 보장이 없다.
 
-```
-// poemWithPages.ts
+-   [poemWithPages.ts](./chap4/poemWithPages.ts)
 
+```
 type PoemWithPages = {
     name: string;
     pages: number;
@@ -431,9 +436,9 @@ if (poem.pages) { /* ... */}
 
 -   타입 내로잉 없이는 값에 존재하는 속성을 보장할 수 없다.
 
-```
-// poemUnions.ts
+-   [poemUnions.ts](./chap4/poemUnions.ts)
 
+```
 type PoemWithPages = {
     name: string;
     pages: number;
@@ -482,9 +487,9 @@ poem.pages;
 -   교차 타입은 일반적으로 여러 기존 객체 타입을 별칭 객체 타입으로 결합해 새로운 타입을 생성한다.
 -   다음 Artwokr와 Writing 타입은 genere, name, pages 속성을 결합한 WrittenArt 타입을 형성하는 데 사용된다.
 
-```
-// intersectionType.ts
+-   [intersectionType.ts](./chap4/intersectionType.ts)
 
+```
 type Artwork = {
     genre: string;
     name: string;
@@ -508,9 +513,9 @@ type WrittenArt = Artwork & Writing;
 -   교차 타입은 유니언 타입과 결합할 수 있으며, 이는 하나의 타입으로 판별된 유니언 타입을 설명하는 데 유용하다.
 -   다음 shortPoem 타입은 항상 author 속성을 가지며 하니의 type 속성으로 판별된 유니언 타입이다.
 
-```
-// shortPoem.ts
+-   [shortPoem.ts](./chap4/shortPoem.ts)
 
+```
 type ShortPoem = { author: string } & (
     | { kigo: string; type: "haiku" }
     | { meter: number; type: "villanelle" }
@@ -545,9 +550,9 @@ const oneArt: ShortPoem = {
     -   복잡하면 복잡할수록 타입 검사기의 메시지도 이해하기 더 어려워진다.
 -   이전 코드 shortPoem의 경우 타입스크립트가 해당 이름을 출력하도록 타입을 일련의 별칭으로 된 객체 타입으로 분할하면 읽기가 휠썬 쉬워진다.
 
-```
-// shortPoemBase.ts
+-   [shortPoemBase.ts](./chap4/shortPoemBase.ts)
 
+```
 type ShortPoemBase = { author: string };
 type Haiku = ShortPoemBase & { kigo: string; type: "haiku" };
 type Villanelle = ShortPoemBase & { meter: number; type: "villanelle" };
@@ -570,9 +575,9 @@ const oneArt: ShortPoem = {
 -   원시 타입의 값은 동시에 여러 타입이 될 수 없기 때문에 교차 타입의 구성 요소로 함께 결합할 수 없다.
 -   두 개의 원시 타입을 함께 시도하면 never 키워드로 표시되는 never 타입이 된다.
 
-```
-// notPossible.ts
+-   [notPossible.ts](./chap4/notPossible.ts)
 
+```
 type NotPossible = number & string;
 
 let notNumber: NotPossible = 0;
