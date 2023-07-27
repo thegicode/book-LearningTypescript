@@ -13,7 +13,7 @@
     arrayOfNumbers = [4, 8, 26, 16, 23, 42];
     ```
 
--   [NOTE] 배열 타입은 Array<number> 같은 구문으로도 작성할 수 있다. 하지만 개발자 대부분은 더 간단한 number[]를 선호한다.
+-   [NOTE] 배열 타입은 Array\<number> 같은 구문으로도 작성할 수 있다. 하지만 개발자 대부분은 더 간단한 number[]를 선호한다.
 
 <br>
 
