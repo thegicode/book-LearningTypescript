@@ -27,3 +27,21 @@
 ### [Chapter 9 타입 제한자](chap9.md)
 
 ### [Chapter 10 제네릭](chap10.md)
+
+---
+
+## Part 3 사용법
+
+### [Chapter 11 선언 파일](chap11.md)
+
+### [Chapter 12 IDE 기능 사용](chap12.md)
+
+### [Chapter 13 구성 옵션](chap13.md)
+
+---
+
+## Part 4 한 걸음 더
+
+### [Chapter 14 구문 확장](chap14.md)
+
+### [Chapter 15 타입 운영](chap15.md)
