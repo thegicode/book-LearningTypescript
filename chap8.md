@@ -2,7 +2,7 @@
 
 ## 8.1 클래스 메서드
 
--   타입스크립트는 독립 함수 standalong function를 이해하는 것과 동일한 방식으로 메서드를 이해한다.
+-   타입스크립트는 독립 함수 standalone function를 이해하는 것과 동일한 방식으로 메서드를 이해한다.
 -   매개변수 타입에 타입이나 기본값을 지정하지 않으면 any 타입을 기본으로 갖는다.
 
     -   [greeter.ts](./chap8/greeter.ts)
