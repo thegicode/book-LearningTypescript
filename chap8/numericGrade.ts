@@ -1,0 +1,18 @@
+class NumericGrade {
+    value = 0;
+}
+
+class ValueGrade extends NumericGrade {
+    value = Math.random() > 0.5 ? 1 : "...";
+    //  Error: Property 'value' in type 'ValueGrade' is not assignable to the same property in base type 'NumericGrade'.
+    //   Type 'string | number' is not assignable to type 'number'.
+    //   Type 'string' is not assignable to type 'number'.
+}
+
+const instance: NumericGrade = new ValueGrade();
+
+// 에상 타입:  number
+// 실제 타입: number | string
+instance.value;
+
+export {};
