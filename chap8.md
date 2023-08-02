@@ -84,7 +84,7 @@
 
 ### 8.2.1 함수 속성
 
--   메서드 접근 방식을 함수를 클래스 프로토타입에 할당하므로 모든 클래스 인스턴스는 동일한 함수 정의를 사용한다.
+-   메서드 접근 방식은 함수를 클래스 프로토타입에 할당하므로 모든 클래스 인스턴스는 동일한 함수 정의를 사용한다.
 
     -   [withMethod.js](./chap8/withMethod.js)
 
@@ -150,18 +150,19 @@
 
 -   엄격한 초기화 검사가 없다면, 비록 타입 시스템이 undefined 값에 접근할 수 없다고 말할지라도 클래스 인스턴스는 undefined 값에 접근할 수 있다.
 
-        -   [missingInitializer.ts](./chap8/missingInitializer.ts)
+    -   [missingInitializer.ts](./chap8/missingInitializer.ts)
 
-        ```
-        class MissingInitializer {
-            property: string;
-            // Error : 속성 'property'은(는) 이니셜라이저가 없고 생성자에 할당되어 있지 않습니다.
-        }
+    ```
+    class MissingInitializer {
+        property: string;
+        // Error : 속성 'property'은(는) 이니셜라이저가 없고 생성자에 할당되어 있지 않습니다.
+    }
 
-        new MissingInitializer().property.length;
-        // Runtime error : Cannot read properties of undefined (reading 'length')
-        ```
-        - 12장 'IDE 기능 사용', strictPropertyInitialization 컴파일러 옵션
+    new MissingInitializer().property.length;
+    // Runtime error : Cannot read properties of undefined (reading 'length')
+    ```
+
+    -   12장 'IDE 기능 사용', strictPropertyInitialization 컴파일러 옵션
 
 <br>
 
@@ -215,8 +216,6 @@
     new MissingInitializer().property.length;
     // Error : 개체가 'undefined'인 것 같습니다.
 
-    export {};
-
     ```
 
 <br>
@@ -255,7 +254,9 @@
     -   특히 자바스크립트를 작성 중이고 타입 검사를 하지 않는 사용자라면 더욱 그렇다.
     -   진정한 읽기 전용 보호가 필요하다면 # private 필드나 get() 함수 속성 사용을 고려해보라.
 
--   원시 타입의 초깃값을 갖는 readonly로 선언된 속성은 다른 속성과 조금 다르다. - 더 넓은 원싯값이 아니라 값의 타입이 가능한 한 좁혀진 리터럴 타입으로 유추된다.
+-   원시 타입의 초깃값을 갖는 readonly로 선언된 속성은 다른 속성과 조금 다르다.
+
+    -   더 넓은 원싯값이 아니라 값의 타입이 가능한 한 좁혀진 리터럴 타입으로 유추된다.
 
     -   [randomQuote.ts](./chap8/randomQuote.ts)
     -   클래스 속성은 처음에는 모두 문자열 리터럴로 선언되므로 둘 중 하나를 string으로 확장하기 위해서는 타입 애너테이션이 필요하다
@@ -498,6 +499,7 @@
 ### 8.5.1 할당 가능성 확장
 
 -   하위 클래스의 인스턴스는 기본 클래스의 모든 멤버를 가지므로 기본 클래스의 인스턴스가 필요한 모든 곳에서 사용할 수 있다.
+
 -   [lesson.ts](/chap8/lesson.ts)
 
     ```
@@ -528,6 +530,8 @@
     online = new Lesson("coding");
     // Error: Property 'url' is missing in type 'Lesson' but required in type 'OnlineLesson'.
     ```
+
+    -   <strong style="color:yellow">super(subject)</strong>
 
 -   타입스크립트의 구조적 타입에 따라 하위 클래스의 모든 멤버가 동일한 타입의 기본 클래스에 이미 존재하는 경우 기본 클래스의 인스턴스를 하위 클래스 대신 사용할 수 있다.
 -   [subClass.ts](./chap8/subClass.ts)
