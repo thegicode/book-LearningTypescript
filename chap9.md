@@ -44,7 +44,7 @@
 
 -   타입스크립트에서 unknown 타입은 진정한 top 타입이다.
 -   모든 객체를 unknown 타입의 위치로 전달할 수 있다는 점에서 any 타입과 유사하다.
--   unknown 타입과 any 타입의 주요 차이점으로는 타입스크립트는 <span class="emphasis">unknown 타입의 값을 훨씬 더 제한적으로 취급<span>한다.
+-   unknown 타입과 any 타입의 주요 차이점으로는 타입스크립트는 <u>unknown 타입의 값을 훨씬 더 제한적으로 취급</u>한다.
 
     -   타입스크립트는 unknown 타입의 속성에 직접 접근할 수 없다.
     -   unknown 타입은 top 타입이 아닌 타입에는 발생할 수 없다.
@@ -258,7 +258,7 @@
 -   타입스크립트에서는 기존에 존재하는 타입을 사용하고, 해당 타입에 허용되는 모든 키의 조합을 변환하는 keyof 연산자를 제공한다.
 
     -   타입 에너테이션처럼 타입을 사용하는 모든 곳에서 타입 이름 앞에 keyof 연산자를 배치한다.
-    -   <span class="emphasis">[getCountKeyof.ts](./chap9/getCountKeyof.ts)</span>
+    -   <u>[getCountKeyof.ts](./chap9/getCountKeyof.ts)</u>
 
     ```
     function getCountKeyof(ratings: Ratings, key: keyof Ratings): number {
@@ -326,7 +326,3 @@
 <br>
 
 ## 9.6 마치며
-
-<style>
-    .emphasis {text-decoration:underline}
-</style>
