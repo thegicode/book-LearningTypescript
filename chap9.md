@@ -283,6 +283,59 @@
 
 ### 9.3.2 typeof
 
+-   값의 타입을 수동으로 작성하는 것이 짜증날 정도로 복잡한 경우에 사용하면 매우 유용
+
+    -   [original.ts](./chap9/original.ts)
+
+    ```
+    const original = {
+        medium: "movie",
+        title: "Mean Girls",
+    };
+
+    let adaptation: typeof original;
+
+    if (Math.random() > 0.5) {
+        adaptation = { ...original, medium: "play" }; // Ok
+    } else {
+        adaptation = { ...original, medium: 2 };
+        // Error: Type 'number' is not assignable to type 'string'.
+    }
+
+    ```
+
+-   자바스크립트의 typeof 연산자는 타입에 대한 문자열 이름을 변환하는 런타임 연산
+
+<br>
+
+#### **keyof typeof**
+
+-   typeof는 값의 타입 검색, keyof는 타입에 허용된 키를 검색
+    -   두 키워드를 연결해 값의 타입에 허용된 키를 간결하게 검색할 수 있다.
+-   [logRatins.ts](./chap9/logRating.ts)
+
+    ```
+    const ratings = {
+        imdb: 8.4,
+        metacritic: 82,
+    };
+
+    function logRating(key: keyof typeof ratings) {
+        console.log(ratings[key]);
+    }
+
+    logRating("imdb"); // Ok
+
+    logRating("invalid");
+    // Error: Argument of type '"invalid"' is not assignable to parameter of type '"imdb" | "metacritic"'
+
+    ```
+
+    -   logRating 함수는 rating 값의 키 중 하나를 받는다.
+    -   <ins>코드는 인터페이스를 생성하는 대신, keyof typeof를 사용해 키가 ratings 값 타입의 키 중 하나여야 함을 나타낸다.</ins>
+
+-   keyof와 typeof를 결합해서 사용하면 명시적 인터페이스 타입이 없는 객체에 허용된 키를 나타내는 타입에 대한 코드를 작성하고 업데이트하는 수고를 줄일 있다.
+
 <br>
 
 ---
