@@ -257,7 +257,7 @@
 -   그러나 인터페이스에 수십 개 이상의 멤버가 있다면?
 -   타입스크립트에서는 기존에 존재하는 타입을 사용하고, 해당 타입에 허용되는 모든 키의 조합을 변환하는 keyof 연산자를 제공한다.
 
-    -   타입 에너테이션처럼 타입을 사용하는 모든 곳에서 타입 이름 앞에 keyof 연산자를 배치한다.
+    -   <ins>타입 에너테이션처럼 타입을 사용하는 모든 곳에서 타입 이름 앞에 keyof 연산자를 배치한다.</ins>
     -   <ins>[getCountKeyof.ts](./chap9/getCountKeyof.ts)</ins>
 
     ```
@@ -285,7 +285,7 @@
 
 -   값의 타입을 수동으로 작성하는 것이 짜증날 정도로 복잡한 경우에 사용하면 매우 유용
 
-    -   [original.ts](./chap9/original.ts)
+    -   <ins>[original.ts](./chap9/original.ts)</ins>
 
     ```
     const original = {
@@ -312,7 +312,7 @@
 
 -   typeof는 값의 타입 검색, keyof는 타입에 허용된 키를 검색
     -   두 키워드를 연결해 값의 타입에 허용된 키를 간결하게 검색할 수 있다.
--   [logRatins.ts](./chap9/logRating.ts)
+-   <ins>[logRatins.ts](./chap9/logRating.ts)</ins>
 
     ```
     const ratings = {
