@@ -1,14 +1,17 @@
 {
-  "name": "book-learningtypescript",
-  "version": "1.0.0",
-  "description": "## Part 1 개념",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "typescript": "^5.1.6"
-  }
+    "name": "book-learningtypescript",
+    "version": "1.0.0",
+    "description": "learning typescript",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^5.1.6"
+    },
+    "dependencies": {
+        "@types/node": "^20.4.6"
+    }
 }

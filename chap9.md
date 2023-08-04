@@ -342,19 +342,217 @@
 
 <br>
 
-## 9.4 타입 어서션
+## 9.4 타입 어서션 type assertion
+
+-   타입스크립트는 코드가 강력하게 타입화 strongly typed 될 때 가장 잘 작동한다.
+-   경우에 따라서 코드가 어덯게 작동하는지 타입 시스템에 100% 정확하게 알리는 것이 불가능할 때가 있다.
+-   타입스크립트는 값의 타입에 대한 타입 시스템의 이해를 재정의하기 위한 구문으로 타입 어서션 type assertion(또는 타입 캐스트 type cast)를 제공한다.
+-   다른 타입을 의미하는 값의 타입 다음에 as 키워드를 배치한다. 타입 시스템은 어서션을 따르고 값을 해당 타입으로 처리한다.
+-   [rawData.ts](./chap9/rawData.ts)
+
+    ```
+    const rawData = ["grace", "frankie"];
+
+    // 타입: any
+    JSON.parse(rawData);
+    // Error: Argument of type 'string[]' is not assignable to parameter of type 'string'.
+
+    // 타입: string[]
+    JSON.parse(rawData) as string[];
+    // Error: Argument of type 'string[]' is not assignable to parameter of type 'string'.
+
+    // 타입: [string, string]
+    JSON.parse(rawData) as [string, string];
+    // Error: Argument of type 'string[]' is not assignable to parameter of type 'string'.
+
+    // 타입: ["grace", "frankie"]
+    JSON.parse(rawData) as ["grace", "frankie"];
+    // Error: Argument of type 'string[]' is not assignable to parameter of type 'string'.
+
+    ```
+
+    -   다음과 같이 컴파일된다.
+
+    ```
+    var rawData = ["grace", "frankie"];
+
+    // 타입: any
+    JSON.parse(rawData);
+
+    // 타입: string[]
+    JSON.parse(rawData);
+
+    // 타입: [string, string]
+    JSON.parse(rawData);
+
+    // 타입: ["grace", "frankie"]
+    JSON.parse(rawData);
+    ```
+
+-   [NOTE] 이전 라이브러리나 코드로 작업하는 경우 item as type 대신 <type>item 같은 캐스팅 구문을 볼 수 있다.
+
+    -   이 구문은 JSX 구문과 호환되지 않고 .tsx 파일에서도 작동되지 않기 때문에 권장하지 않는다.
+
+-   타입스크립트 모범 사례는 가능한 한 타입 어서션을 사용하지 않는 것이다.
 
 <br>
 
 ### 9.4.1 포착된 오류 타입 어서션
 
+-   코드 영역이 Error 클래스의 인스턴스를 발생시킬 거라 틀림없이 확신한다면 타입 어서션을 사용해 포착된 어서션을 오류로 처리할 수 있다.
+-   다음 스니펫은 Error 클래스의 인스턴스라고 가정된 error의 message 속성에 접근한다.
+
+    ```
+    try {
+        // (오류를 발생시키는 코드)
+    } catch(error) {
+        console.warn("Oh, no!", (error as Error).message)
+    }
+    ```
+
+-   발생된 오류가 예상된 오류 타입인지를 확안하기 위해 instanceof와 같은 타입 내로잉을 사용하는 것이 더 안전하다.
+
+    ```
+    try {
+        // (오류를 발생시키는 코드)
+    } catch(error) {
+        console.warn("Oh, no!", error instanceof Error ? error.message : error)
+    }
+    ```
+
 <br>
 
 ### 9.4.2 non-null 어서션
 
+-   null과 undefined를 제외한 값의 전체타입을 작성하는 대신 !를 사용한다.
+-   non-null 어서션은 타입이 null 또는 undefined가 아니라고 간주하다.
+-   다음 두 가지 타입 어서션은 둘 다 Date | undefined가 아니고 Date가 된다는 점에서 동일하다.
+
+    -   [maybeDate.ts](./chap9/maybeDate.ts)
+
+    ```
+    // 타입 유추: Date | undefined
+    let maybeDate = Math.random() > 0.5 ? undefined : new Date();
+
+    // 타입이 Date라고 간주됨
+    maybeDate as Date;
+
+    // 타입이 Date라고 간주됨
+    maybeDate;
+
+    export {};
+
+    ```
+
+-   non-null 어서션은 값을 반환하거나 존재하지 않는 경우 undefined를 반환하는 Map.get과 같은 API에서 특히 유용한다.
+
+    -   [seasonCounts.ts](./chap9/seasonCounts.ts)
+    -   다음 seasonCounts는 일반적인 Map<string, number>이다. knownValue 변수는 !을 사용해 해당 타입에서 | undefined를 제거할 수 있다.
+
+    ```
+    const seasonCounts = new Map([
+        ["I love Lucy", 6],
+        ["The Golden Grils", 7],
+    ]);
+
+    // 타입: string : undefined
+    let maybeValue = seasonCounts.get("I love Lucy");
+
+    console.log(maybeValue.toUpperCase());
+    // Error: Property 'toUpperCase' does not exist on type 'number'.
+
+    // 타입: string
+    const knownValue = seasonCounts.get("I love Lucy")!;
+    // Error: Property 'toUpperCase' does not exist on type 'number'.
+
+    console.log(knownValue.toUpperCase());
+
+    //  1. Map
+    // Cannot find name 'Map'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2015' or later.
+    // 구글 검색 결과 :  npm i @types/node 로 해결
+    // 2. Property 'toUpperCase' does not exist on type 'number'.
+    // 책에서는 언급이 없다. 코드 예제가 내용에 적당하지 않는 것 가탇.
+
+    ```
+
 <br>
 
 ### 9.4.3 타입 어서션 주의사항
+
+-   꼭 필요한 경우가 아니라면 가능한 한 사용하지 말아야 한다.
+-   값에 타입에 대해 더 쉽게 어서션하는 것보다 코드를 나타내는 더 정확한 타입을 갖는 것이 좋다.
+-   이러한 어서션은 종종 잘못되기도 한다. -[seasonCount2.ts](./chap9/seasonCounts2.ts)
+
+    ```
+    const seasonCounts = new Map([
+        ["Broad City", "6"],
+        ["Community", "7"],
+    ]);
+
+    // type: string
+    const knownValue = seasonCounts.get("I love lucy")!;
+
+    console.log(knownValue.toUpperCase()); // 타입 오류는 아니지만, 런타임 오류가 발생함
+    // Runtime TypeError: Cannot read properties of undefined (reading 'toUpperCase')
+
+    ```
+
+-   타입 어서션은 자주 사용하면 안되고, 사용하는 것이 안전하다고 확신할 때만 사용해야 한다.
+
+<br>
+
+#### **어서션 vs 선언**
+
+-   변수 타입을 선언하기 위해 타입 애너테이션을 사용하는 것과 초깃값으로 변수 타입을 변경하기 위해 타입 어서션을 사용하는 것 사이에는 차이가 있다.
+-   타입 어서션은 타입스크립트에 타입 검사 중 일부를 건너띄도록 명시적으로 지시한다.
+
+        -   [entertainer.ts](./chap9/entertainer.ts)
+
+        ```
+        interface Entertainer {
+            acts: string[];
+            name: string;
+        }
+
+        const declared: Entertainer = {
+            // Error: Property 'acts' is missing in type '{ name: string; }' but required in type 'Entertainer'.
+            name: "Moms Mabley",
+        };
+
+        const asserted = {
+            name: "Moms Mabley",
+        } as Entertainer;
+
+        console.log(declared.acts.join(", "));
+        // Runtime TypeError: Cannot read properties of undefined (reading 'join')
+        console.log(asserted.acts.join(", "));
+
+        ```
+
+        -   Entertainer 타입 애너테이션으로 인해 declared 변수에서 오류를 잡을 수 있다.
+        -   타입 어서션 때문에 asserted 변수에 대해서는 오류를 잡을수 없다.
+
+    <br>
+
+#### **어서션 할당 가능성 double type assertion**
+
+-   타입스크립트는 타입 중 하나가 다른 타입에 할당 가능한 경우에만 두 타입 간의 타입 어서션을 허용한다.
+-   [myValue.ts](./chap9/myValue.ts)
+
+    ```
+    let myValue = "Stellla!" as number;
+    // Error: Conversion of type 'string' to type 'number' may be a mistake
+    // because neither type sufficiently overlaps with the other.
+    // If this was intentional, convert the expression to 'unknown' first.
+
+    ```
+
+-   하나의 타입에서 값을 완전히 관련 없는 타입으로 전환해야 하는 경우 이중 타입 어서션 double type assertion을 사용한다.
+    ```
+    let myValueDoubble = "1337" as unknown as number;
+    // 허용되지만 이렇게 사용하면 안 됨
+    ```
+    -   as unknown as ... 이중 타입 어서션은 위험하고 항상 코드의 타입이 잘못되었다는 징후를 나타낸다.
 
 <br>
 
