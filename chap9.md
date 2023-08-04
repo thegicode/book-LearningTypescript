@@ -564,13 +564,121 @@
 
 ## 9.5 constant 어서션
 
+-   const 어서션은 배열, 원시 타입, 값, 별칭 등 모든 값을 상수로 취급해야 함을 나타내는데 사용한다.
+-   as const는 수신하는 모든 타입에 다음 세 가지 규칙을 적용한다.
+    -   배열은 가변 배열이 아니라 읽기 전용 튜플로 취급된다.
+    -   리터럴은 일반적인 원시 타입과 동등하지 않고 리터럴로 취급된다.
+    -   객체의 속성은 읽기 전용으로 간주된다.
+-   다음 배열이 튜플로 간주되는 것처럼 배열이 튜플이 되는 것을 이미 보았다.
+
+    ```
+    // 타입: (number | string)[]
+    [0, ''];
+
+    // 타입: readonly[0, '']
+    [0, ''] as const
+
+    ```
+
 <br>
 
 ### 9.5.1 리터럴에서 원시 타입으로
 
+-   타입 시스템에서 리터럴 값을 일반적인 원시 타입으로 확장하기보다 특정 리터럴로 이해하는 것이 유용할 수 있다.
+-   예를 들어 튜플을 반환하는 함수처럼 일반적인 원시 타입 대신 특정 리터럴을 생성한다고 알려진 함수에서 유용할 수 있다.
+
+    ```
+    // 타입: () => string
+    const getName = () => "Maria Banford";
+
+    // 타입: () => "Maria Banford"
+    const getNameConst = () => "Maria Banford" as const;
+
+    ```
+
+-   <ins>값의 특정 필드가 더 구체적인 리터럴 값을 갖도록 하는 것도 유용하다.</ins>
+
+    -   [joke.ts](./chap9/joke.ts)
+
+    ```
+    interface Joke {
+        quote: string;
+        style: "story" | "one-liner";
+    }
+
+    function tellJoke(joke: Joke) {
+        if (joke.style === "one-liner") {
+            console.log(joke.quote);
+        } else {
+            console.log(joke.quote.split("\n"));
+        }
+    }
+
+    // type: { quote: string; style: "one-liner"}
+    const narrowJoke = {
+        quote: "If ypu staty alive for non other reasons do it for spite.",
+        style: "one-liner" as const,
+    };
+
+    tellJoke(narrowJoke); // Ok
+
+    // type: { quote: string; style: string }
+    const wideObject = {
+        quote: "Time files when you are anxious!",
+        style: "one-liner",
+    };
+    tellJoke(wideObject);
+    // Error: Argument of type '{ quote: string; style: string; }' is not assignable to parameter of type 'Joke'.
+    //   Types of property 'style' are incompatible.
+    //   Type 'string' is not assignable to type '"story" | "one-liner"'.
+
+    export {};
+
+    ```
+
 <br>
 
 ### 9.5.2 읽기 전용 객체
+
+-   값 리터럴에 const 어서션을 적용하면 해당 값 리터럴이 변경되지 않고 모든 멤버에 동일한 const 어서션 로직이 재귀적으로 적용된다.
+
+    -   [describePrference.ts](./chap9/describePrference.ts)
+
+    ```
+    function describePrference(preference: "maybe" | "no" | "yes") {
+        switch (preference) {
+            case "maybe":
+                return "I suppores...";
+            case "no":
+                return "No thanks.";
+            case "yes":
+                return "Yes please!";
+        }
+    }
+
+    // type: { movie: string, standup: string }
+    const preferenceMutable = {
+        movie: "maybe",
+        standup: "yes",
+    };
+
+    describePrference(preferenceMutable.movie);
+    // Error: Argument of type 'string' is not assignable to parameter of type '"maybe" | "no" | "yes"'.
+
+    const preferencesReadonly = {
+        movie: "maybe",
+        standup: "yes",
+    } as const;
+
+    describePrference(preferencesReadonly.movie);
+
+    preferencesReadonly.movie = "no";
+    // Error: Cannot assign to 'movie' because it is a read-only property.
+
+    ```
+
+    -   preferenceMutable의 값은 as const 없이 선언되었으므로 이름은 원시 타입인 string이 되고 수정이 허용된다.
+    -   <ins>preferencesReadonly는 as const로 선언되었으므로 해당 멤버 값은 리터럴이고 수정이 허용되지 않는다.</ins>
 
 <br>
 
@@ -579,3 +687,10 @@
 <br>
 
 ## 9.6 마치며
+
+-   top 타입: 매우 허용도가 높은 any와 제한적인 unknown
+-   타입 연산자: keyof로 타입의 키를 알아내고, typeof로 값의 타입 알아내기
+-   값의 타입을 변경하기 위해 타입 어서션을 사용하는 경우와 사용하지 않는 경우
+-   as const 어서션을 사용한 타입 내로잉
+
+[TIP] https://www.learningtypescript.com/type-modifiers 에서 배운 내용을 연습
