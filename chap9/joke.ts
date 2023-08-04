@@ -24,6 +24,7 @@ const wideObject = {
     quote: "Time files when you are anxious!",
     style: "one-liner",
 };
+
 tellJoke(wideObject);
 // Error: Argument of type '{ quote: string; style: string; }' is not assignable to parameter of type 'Joke'.
 //   Types of property 'style' are incompatible.
