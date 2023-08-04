@@ -389,7 +389,7 @@
     JSON.parse(rawData);
     ```
 
--   [NOTE] 이전 라이브러리나 코드로 작업하는 경우 item as type 대신 <type>item 같은 캐스팅 구문을 볼 수 있다.
+-   [NOTE] 이전 라이브러리나 코드로 작업하는 경우 item as type 대신 \<type>item 같은 캐스팅 구문을 볼 수 있다.
 
     -   이 구문은 JSX 구문과 호환되지 않고 .tsx 파일에서도 작동되지 않기 때문에 권장하지 않는다.
 
@@ -410,7 +410,7 @@
     }
     ```
 
--   발생된 오류가 예상된 오류 타입인지를 확안하기 위해 instanceof와 같은 타입 내로잉을 사용하는 것이 더 안전하다.
+-   <ins>발생된 오류가 예상된 오류 타입인지를 확안하기 위해 instanceof와 같은 타입 내로잉을 사용하는 것이 더 안전하다.</ins>
 
     ```
     try {
@@ -424,7 +424,7 @@
 
 ### 9.4.2 non-null 어서션
 
--   null과 undefined를 제외한 값의 전체타입을 작성하는 대신 !를 사용한다.
+-   <ins>null과 undefined를 제외한 값의 전체타입을 작성하는 대신 !를 사용한다.</ins>
 -   non-null 어서션은 타입이 null 또는 undefined가 아니라고 간주하다.
 -   다음 두 가지 타입 어서션은 둘 다 Date | undefined가 아니고 Date가 된다는 점에서 동일하다.
 
@@ -451,19 +451,18 @@
 
     ```
     const seasonCounts = new Map([
-        ["I love Lucy", 6],
-        ["The Golden Grils", 7],
+        ["I love Lucy", "6"],
+        ["The Golden Grils", "7"],
     ]);
 
     // 타입: string : undefined
     let maybeValue = seasonCounts.get("I love Lucy");
 
     console.log(maybeValue.toUpperCase());
-    // Error: Property 'toUpperCase' does not exist on type 'number'.
+    // Error: 'maybeValue'은(는) 'undefined'일 수 있습니다.
 
     // 타입: string
     const knownValue = seasonCounts.get("I love Lucy")!;
-    // Error: Property 'toUpperCase' does not exist on type 'number'.
 
     console.log(knownValue.toUpperCase());
 
@@ -471,7 +470,8 @@
     // Cannot find name 'Map'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2015' or later.
     // 구글 검색 결과 :  npm i @types/node 로 해결
     // 2. Property 'toUpperCase' does not exist on type 'number'.
-    // 책에서는 언급이 없다. 코드 예제가 내용에 적당하지 않는 것 가탇.
+    // 책에서는 언급이 없다. 코드 예제가 내용에 적당하지 않는 것 같다.
+    // number를 string으로 바꿔서 적용
 
     ```
 
@@ -481,7 +481,9 @@
 
 -   꼭 필요한 경우가 아니라면 가능한 한 사용하지 말아야 한다.
 -   값에 타입에 대해 더 쉽게 어서션하는 것보다 코드를 나타내는 더 정확한 타입을 갖는 것이 좋다.
--   이러한 어서션은 종종 잘못되기도 한다. -[seasonCount2.ts](./chap9/seasonCounts2.ts)
+-   이러한 어서션은 종종 잘못되기도 한다.
+
+    -   [seasonCount2.ts](./chap9/seasonCounts2.ts)
 
     ```
     const seasonCounts = new Map([
