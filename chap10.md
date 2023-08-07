@@ -2,8 +2,21 @@
 
 -   코드에서 호출하는 방식에 따라 다양한 타입으로 작동하도록 의도할 수 있다.
 -   [identity.js](./chap10/identity.js)
+
+    ```
+    function identity(input) {
+        return input;
+    }
+
+    identity("abc");
+    identity(123);
+    identity({ quote: "I think ~" });
+
+    ```
+
     -   identity 함수는 모든 가능한 타입으로 input을 받고, 동일한 input을 출력으로 반환한다.
     -   input이 모든 입력을 허용한다면, input 타입과 함수 반환 타입 간의 관계를 말할 수 있는 방법이 필요하다.
+
 -   타입스크립트는 제네릭을 사용해 타입 간의 관례를 알아낸다.
 -   타입스크립트에서 함수와 같은 구조체는 제네릭 타입 매개변수를 원하는 수만큼 선언할 수 있다.
 -   타입 매개변수는 구조체의 각 인스턴스에 대해 타입 인수라고 하는 서로 다른 타입을 제공할 수 있지만, 타입 인수가 제공된 인스턴스 내에서는 일관성을 유지한다.
@@ -93,7 +106,7 @@
 
     ```
 
--   명시적 타입 인수는 제네렉 함수에 지정할 수 있지만 때로는 필요하지 않다. 필요할 때만 명시적 타입 인수를 지정한다.
+-   명시적 타입 인수는 제네릭 함수에 지정할 수 있지만 때로는 필요하지 않다. 필요할 때만 명시적 타입 인수를 지정한다.
     ```
     logWrapper<string>((input: string) => {
         //
@@ -104,6 +117,49 @@
 <br>
 
 ### 10.1.2 다중 함수 타입 매개변수
+
+-   임의의 수의 타입 매개변수를 쉼표로 구분해 함수를 정의
+
+    -   [makeTuple.ts](./chap10/makeTutple.ts)
+
+        ```
+        function makeTuple<First, Second>(first: First, second: Second) {
+            return [first, second] as const;
+        }
+
+        let tuple = makeTuple(true, "abc");
+        // value: readonly [boolean, string] 타입
+
+        ```
+
+        -   두 개의 타입 매개변수를 선언하고, 입력된 값을 읽기 전용 튜플로 반환
+
+-   함수가 여러 개의 매개변수를 선언하면 해당 함수에 대한 호출은 명시적으로 제네릭 타입을 모두 선언하지 않거나 모두 선언해야 한다.
+
+    -   타입스크립트는 아직 제네릭 호출 중 일부 타임만을 유추하지 못한다.
+    -   [makePair.ts](./chap10/makePair.ts)
+
+    ```
+    function makePair<Key, Value>(key: Key, value: Value) {
+        return { key, value };
+    }
+
+    // Ok: 타입 인수가 둘 다 제공되지 않음
+    makePair("abc", 123);
+    // type: {key: string, value: number}
+
+    // Ok: 두 개의 타입 인수가 제공됨
+    makePair<string, number>("abc", 123);
+    // type: {key: string, value: number}
+
+    makePair<string>("abc", 123);
+    // Error: Expected 2 type arguments, but got 1.
+
+    ```
+
+    -   두 개의 타입 매개변수를 받으르모 두 개를 모두 명시적으로 지정하거나 지정하지 않아야 한다.
+
+-   [TIP] 제네릭 구조체에서 두 개보다 많은 타입 매개변수를 사용하지 말라. 런타임 함수 매개변수처럼 많이 사용할수록 코드를 읽고 이해하는 것이 점점 어려워진다.
 
 <br>
 
