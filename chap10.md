@@ -169,9 +169,121 @@
 
 ## 10.2 제네릭 인터페이스
 
+-   인터페이스는 함수와 유사한 제네릭 규칙을 따르며 인터페이스 이름 뒤 \< 과 \> 사이에 선언된 임의이 수의 타입 매개변수를 갖는다.
+-   해당 제네릭 타입은 나중에 멤버 타입과 같이 선언의 다른 곳에서 사용할 수 있다.
+
+    -   [box.ts](./chap10/box.ts)
+
+    -   속성에 대한 매개변수 T 타입 매개변수가 있다.
+    -   타입 인수로 Box로 선언된 객체를 생성하면 inside의 T 속성이 해당 타입 인수와 일치된다.
+
+        ```
+        interface Box<T> {
+            inside: T;
+        }
+
+        let stringBox: Box<string> = {
+            inside: "abc",
+        };
+
+        let numberBox: Box<number> = {
+            inside: 123,
+        };
+
+        let incorrectBox: Box<number> = {
+            inside: false,
+            // Error: Type 'boolean' is not assignable to type 'number'.
+        };
+        ```
+
+-   타입스크립트에서 내장 Array 메서드는 제네릭 인터페이스로 정의된다.
+
+    -   [array.ts](./chap10/array.ts)
+    -   Array는 타입 매개변수 T를 사용해서 배열 안에 저장된 데이터의 타입을 나타낸다.
+
+        ```
+        interface Array<T> {
+            /**
+            * 배열에서 마지막 요소를 제거하고 그 요소를 반환
+            * 배열이 비어 있는 경우 undefined를 반환하고 배열은 수정되지 않음
+            */
+            pop(): T | undefined;
+
+            /**
+            * 배열의 끝에 새로운 요소를 추가하고 배열의 길이를 반환
+            * @param items 배열에 추가된 새로운 요소
+            */
+            push(...items: T[]): number;
+        }
+
+        ```
+
 <br>
 
 ### 10.2.1 유추된 제네릭 인터페이스 타입
+
+-   제네릭 함수와 마찬가지로 제네릭 인터페이스의 타입 인수는 사용법에서 유추할 수 있다.
+-   타입스크립트는 제네릭 타입을 취하는 것으로 선언된 위치에 제공된 값의 타입에서 타입 인수를 유추한다.
+
+    -   [getLast.ts](./chap10/getLast.ts)
+
+    ```
+    interface LinkedNode<Value> {
+        next?: LinkedNode<Value>;
+        value: Value;
+    }
+
+    function getLast<Value>(node: LinkedNode<Value>): Value {
+        return node.next ? getLast(node.next) : node.value;
+    }
+
+    // 유추된 Value 타입 인수: Date
+    let lastDate = getLast({
+        value: new Date("09-13-1993"),
+    });
+    console.log("lastDate: ", lastDate);
+    // Log : lastDate: 1993-09-12T15:00:00.000Z
+
+    // 유추된 Value 타입 인수: string
+    let lastFruit = getLast({
+        next: {
+            value: "banana",
+        },
+        value: "apple",
+    });
+    console.log("lastFruit: ", lastFruit);
+    // Log: lastFruit: banana
+
+    // 유추된 Value 타입 인수: number
+    let lastMismatch = getLast({
+        next: {
+            value: 123,
+        },
+        value: false,
+        // Error: Type 'boolean' is not assignable to type 'number'.
+    });
+    console.log("lastMismatch: ", lastMismatch);
+    // Log: lastMismatch: 123
+
+    ```
+
+    -   타입 매개변수 Value를 선언한 다음 Value를 node 매개변수로 사용한다.
+    -   타입스크립트는 인수로 전달된 값의 타입에 따라 Value를 유추한다.
+
+-   인터페이스가 타입 매개변수를 선언하는 경우, 해당 인터페이스를 참조하는 모든 타입 에너테이션은 이에 상응하는 타입 인수를 제공해야 한다.
+
+    -   [createLike.ts](./chap10/createLike.ts)
+
+    ```
+    interface CreateLike<T> {
+        contents: T;
+    }
+
+    let missingGeneric: CreateLike = {
+        // Error: Generic type 'CreateLike<T>' requires 1 type argument(s).
+        inside: "??",
+    };
+    ```
 
 <br>
 
