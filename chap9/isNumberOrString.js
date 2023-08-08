@@ -6,11 +6,12 @@ function isNumberOrString(value) {
     // Do you need to change your target library? Try changing the 'lib' compiler option to 'es2016' or later.
     // tsconfig compilerOption - "lib": ["es2016", "dom"] 추가했으나 계속 메시지가 나온다.
 }
-function logValueIfExists(value: number | string | null | undefined) {
+function logValueIfExists(value) {
     if (isNumberOrString(value)) {
         value.toString();
         // Error: 'value'은(는) 'null' 또는 'undefined'일 수 있습니다.
-    } else {
+    }
+    else {
         console.log("Value does not exist", value);
     }
 }

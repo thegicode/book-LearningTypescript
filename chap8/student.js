@@ -1,24 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Student = /** @class */ (function () {
-    function Student(name) {
+class Student {
+    constructor(name) {
         this.name = name;
     }
-    Student.prototype.study = function (hours) {
-        for (var i = 0; i < hours; i++) {
-            console.log("...studying...");
+    study(hours) {
+        for (let i = 0; i < hours; i++) {
+            console.log(`...studying...`);
         }
-    };
-    return Student;
-}());
-var Slacker = /** @class */ (function () {
-    function Slacker() {
     }
-    return Slacker;
-}());
-var Student2 = /** @class */ (function () {
-    function Student2() {
+}
+class Slacker {
+}
+class Student2 {
+    // Error : 'name' 멤버에는 암시적으로 'any' 형식이 포함됩니다.
+    study(hours) {
+        // Error : 'hours' 매개 변수에는 암시적으로 'any' 형식이 포함됩니다.
     }
-    Student2.prototype.study = function (hours) { };
-    return Student2;
-}());
+}

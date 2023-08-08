@@ -6,4 +6,4 @@ function firstCharAndSizeAsConst(input) {
 }
 // firstChar 타입 : string
 // size 타입 : number
-var _a = firstCharAndSizeAsConst("Ching Shin"), firstChar = _a[0], size = _a[1];
+const [firstChar, size] = firstCharAndSizeAsConst("Ching Shin");

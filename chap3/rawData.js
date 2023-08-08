@@ -1,3 +1,4 @@
-var rawDataFrist;
-var rawDataSecond;
-var rawDataThird;
+"use strict";
+let rawDataFrist;
+let rawDataSecond;
+let rawDataThird;

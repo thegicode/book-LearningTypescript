@@ -1,7 +1,8 @@
-var hasCallCount;
+"use strict";
+let hasCallCount;
 function keepsTrackOfCalls() {
     keepsTrackOfCalls.count += 1;
-    console.log("I've been called ".concat(keepsTrackOfCalls.count, " times!"));
+    console.log(`I've been called ${keepsTrackOfCalls.count} times!`);
 }
 keepsTrackOfCalls.count = 0;
 hasCallCount = keepsTrackOfCalls;
@@ -9,3 +10,4 @@ function doesNoHaveCount() {
     console.log("No idea!");
 }
 hasCallCount = doesNoHaveCount;
+// Error : Property 'count' is missing in type '() => void' but required in type 'FunctionWithCount'.

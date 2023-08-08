@@ -1,4 +1,6 @@
-var poet = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const poet = {
     born: 9135,
     name: "Mary Olover",
 };

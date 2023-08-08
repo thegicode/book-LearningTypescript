@@ -1,10 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+// Error:  'meter' is declared here.
 // Ok
-var morningGlory = {
+const morningGlory = {
     author: "Fukuda Chiyo-ni",
     kigo: "Morning Glory",
     type: "haiku",
 };
-var oneArt = {
+const oneArt = {
+    // Error :  Type '{ author: string; type: "villanelle"; }' is not assignable to type 'ShortPoem'.
+    //   Type '{ author: string; type: "villanelle"; }' is not assignable to type '{ author: string; } & { meter: number; type: "villanelle"; }'.
+    //   Property 'meter' is missing in type '{ author: string; type: "villanelle"; }' but required in type '{ meter: number; type: "villanelle"; }'.
     author: "Elizabeth Bishop",
     type: "villanelle",
 };

@@ -1,7 +1,5 @@
-var MissingInitializer = /** @class */ (function () {
-    function MissingInitializer() {
-    }
-    return MissingInitializer;
-}());
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class MissingInitializer {
+}
 new MissingInitializer().property.length;
-// Runtime error : Cannot read properties of undefined (reading 'length')

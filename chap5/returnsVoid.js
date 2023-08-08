@@ -1,5 +1,7 @@
+"use strict";
 function returnsVoid() {
     return;
 }
-var lazyValue;
+let lazyValue;
 lazyValue = returnsVoid();
+// Error : Type 'void' is not assignable to type 'string'.

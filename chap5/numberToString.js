@@ -1,5 +1,7 @@
+"use strict";
 function usesNumberToString(numberToString) {
-    console.log("The string is : ".concat(numberToString(1234)));
+    console.log(`The string is : ${numberToString(1234)}`);
 }
-usesNumberToString(function (input) { return "".concat(input, "! Hooray!"); });
-usesNumberToString(function (input) { return input * 2; });
+usesNumberToString((input) => `${input}! Hooray!`);
+usesNumberToString((input) => input * 2);
+// Error : Type 'number' is not assignable to type 'string'.

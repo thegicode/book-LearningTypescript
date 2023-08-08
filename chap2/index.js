@@ -1,3 +1,4 @@
+"use strict";
 // let firstName = "whitney";
 // firstName.length();
-var let, wat;
+let let, wat;

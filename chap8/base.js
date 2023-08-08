@@ -1,44 +1,29 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+"use strict";
 var _Base_truePrivate;
-var Base = /** @class */ (function () {
-    function Base() {
+Object.defineProperty(exports, "__esModule", { value: true });
+class Base {
+    constructor() {
         this.isPublicExplicit = 1;
         this.isProtected = 2;
         this.isPrivate = 3;
         _Base_truePrivate.set(this, 4);
+        // Error: Private identifiers are only available when targeting ECMAScript 2015 and higher.
     }
-    return Base;
-}());
+}
 _Base_truePrivate = new WeakMap();
-var SubClass = /** @class */ (function (_super) {
-    __extends(SubClass, _super);
-    function SubClass() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    SubClass.prototype.examples = function () {
-        this.isPublicImpicit;
-        this.isPublicExplicit;
-        this.isProtected;
+class SubClass extends Base {
+    examples() {
+        this.isPublicImpicit; // Ok
+        this.isPublicExplicit; // Ok
+        this.isProtected; // Ok
         this.isPrivate;
+        // Error: Property 'isPrivate' is private and only accessible within class 'Base'.
         this.;
-    };
-    return SubClass;
-}(Base));
-new SubClass().isPublicImpicit;
-new SubClass().isPublicExplicit;
+        // Error: Property '#truePrivate' is not accessible outside class 'Base' because it has a private identifier.
+    }
+}
+new SubClass().isPublicImpicit; // Ok
+new SubClass().isPublicExplicit; // Ok
 new SubClass().isProtected;
+// Error: Property 'isProtected' is protected and only accessible within class 'Base' and its subclasses.
 new SubClass().isPrivate;

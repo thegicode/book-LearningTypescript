@@ -1,11 +1,10 @@
-var Teacher = /** @class */ (function () {
-    function Teacher() {
+"use strict";
+class Teacher {
+    sayHello() {
+        console.log(`Take changes, make mistake, get messy!`);
     }
-    Teacher.prototype.sayHello = function () {
-        console.log("Take changes, make mistake, get messy!");
-    };
-    return Teacher;
-}());
-var teacher;
+}
+let teacher;
 teacher = new Teacher();
 teacher = "Wahoo!";
+// Error : Type 'string' is not assignable to type 'Teacher'.

@@ -1,4 +1,5 @@
-var myNovel;
+"use strict";
+let myNovel;
 myNovel = {
     author: {
         name: "Jane Aussten",
@@ -13,6 +14,7 @@ myNovel = {
         name: "Emily Bronte",
     },
     setting: {
+        // Error : Property 'year' is missing in type '{ place: string; }' but required in type 'Setting'.
         place: "West Yorkshire",
     },
 };

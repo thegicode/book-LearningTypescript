@@ -1,10 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function greetComedianSafety(name) {
     if (typeof name === "string") {
-        console.log("Announcing ".concat(name.toUpperCase()));
+        console.log(`Announcing ${name.toUpperCase()}`); // Ok
     }
     else {
         console.log("Well, I'm off");
     }
 }
 greetComedianSafety("Betty White");
+// Logs: Announcing BETTY WHITE
 greetComedianSafety({});
