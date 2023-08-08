@@ -1,14 +1,14 @@
-var AsNumber = /** @class */ (function () {
-    function AsNumber() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class AsNumber {
+    constructor() {
         this.age = 0;
+        // Error:  Property 'age' in type 'AsNumber' is not assignable to the same property in base type 'AgeIsNotANumber'.
+        //   Type 'number' is not assignable to type '() => string'.
     }
-    return AsNumber;
-}());
-var NotAsNumber = /** @class */ (function () {
-    function NotAsNumber() {
-    }
-    NotAsNumber.prototype.age = function () {
+}
+class NotAsNumber {
+    age() {
         return "";
-    };
-    return NotAsNumber;
-}());
+    }
+}

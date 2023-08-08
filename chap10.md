@@ -169,7 +169,7 @@
 
 ## 10.2 제네릭 인터페이스
 
--   인터페이스는 함수와 유사한 제네릭 규칙을 따르며 인터페이스 이름 뒤 \< 과 \> 사이에 선언된 임의이 수의 타입 매개변수를 갖는다.
+-   인터페이스는 함수와 유사한 제네릭 규칙을 따르며 인터페이스 이름 뒤 \< 과 \> 사이에 선언된 임의의 수의 타입 매개변수를 갖는다.
 -   해당 제네릭 타입은 나중에 멤버 타입과 같이 선언의 다른 곳에서 사용할 수 있다.
 
     -   [box.ts](./chap10/box.ts)
@@ -222,7 +222,6 @@
 
 ### 10.2.1 유추된 제네릭 인터페이스 타입
 
--   제네릭 함수와 마찬가지로 제네릭 인터페이스의 타입 인수는 사용법에서 유추할 수 있다.
 -   타입스크립트는 제네릭 타입을 취하는 것으로 선언된 위치에 제공된 값의 타입에서 타입 인수를 유추한다.
 
     -   [getLast.ts](./chap10/getLast.ts)
@@ -293,25 +292,285 @@
 
 ## 10.3 제네릭 클래스
 
+-   인터페이스처럼 클래스도 나중에 멤버에서 사용할 임의의 타입 매개변수를 선언할 수 있다.
+-   클래스의 각 인스턴스는 타입 매개변수로 각자 다른 타입 인수 집합을 가진다.
+
+    -   [secret.ts](./chap10/secret.ts)
+
+    ```
+    class Secret<Key, Value> {
+        key: Key;
+        value: Value;
+
+        constructor(key: Key, value: Value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        getValue(key: Key): Value | undefined {
+            return this.key === key ? this.value : undefined;
+        }
+    }
+
+    const storage = new Secret(12345, "luggage"); // type: Secet<number, string>
+
+    storage.getValue(1987); // type: string | undefined
+    // undefined
+
+    ```
+
+-   제네릭 인터페이스와 마찬가지로 클래스를 사용하는 타입 애너테이션은 해당 클래스의 제네릭 타입이 무엇인지를 타입스크립트에 나타내야 한다.
+
 <br>
 
 ### 10.3.1 명시적 제네릭 클래스 타입
+
+-   생성자에서 전달된 인수에서 클래스 타입 인수를 유추할 수 없는 경우에는 타입 인수의 기본값은 unknown이 된다.
+
+    -   [curriedCallback.ts](./chap10/curriedCallback.ts)
+
+    ```
+    class CurriedCallback<Input> {
+        #callback: (input: Input) => void;
+        // Error: Private identifiers are only available when targeting ECMAScript 2015 and higher.
+        // 설정을 바꿔봤으나 해결이 안된다.
+
+        constructor(callback: (input: Input) => void) {
+            this.#callback = (input: Input) => {
+                console.log("Input", input);
+                callback(input);
+            };
+        }
+    }
+
+    new CurriedCallback((input: string) => {
+        console.log(input.length);
+    });
+
+    new CurriedCallback((input) => {
+        console.log(input.length);
+        // Error: Property 'length' does not exist on type 'unknown'.
+    });
+
+    ```
+
+-   클래스 인스턴스는 다른 제네릭 함수 호출과 동일한 방식으로 명시적 타입 인수를 제공해서 기본값 unknown이 되는 것을 피할 수 있다.
+
+    -   [curriedCallback2.ts](./chap10/curriedCallback2.ts)
+
+    ```
+    new CurriedCallback<string>((input) => {
+        console.log(input.length);
+    });
+
+    new CurriedCallback<string>((input: boolean) => {});
+    // Error: Argument of type '(input: boolean) => void' is not assignable to parameter of type '(input: string) => void'.
+    //   Types of parameters 'input' and 'input' are incompatible.
+    //   Type 'string' is not assignable to type 'boolean'.
+
+    ```
+
+    -   CurriedCallback의 Input 타입 인수를 string으로 명시적으로 제공하므로 타입스크립트는 해당 콜백의 Input 타입 매개변수가 string으로 해석됨을 유추할 수 있다.
 
 <br>
 
 ### 10.3.2 제네릭 클래스 확장
 
+-   제네릭 클래스는 extends 키워드 다음에 오는 기본 클래스로 사용할 수 있다.
+-   기본값이 없는 모든 타입 인수는 명시적 타입 애너테이션을 사용해 지정해야 한다.
+
+    -   [quote.ts](./chap10/quote.ts)
+
+    ```
+    class Quote<T> {
+        lines: T;
+
+        constructor(lines: T) {
+            this.lines = lines;
+        }
+    }
+
+    class SpokenQuote extends Quote<string[]> {
+        speak() {
+            console.log(this.lines.join("\n"));
+        }
+    }
+
+    const a = new Quote("The only real faiure is the failure to try.").lines; // type: string
+    console.log(a);
+    // Log: The only real faiure is the failure to try.
+
+    const b = new Quote([4, 8, 15, 16, 25, 42]).lines; // type: number[]
+    console.log(b);
+    // Log: [ 4, 8, 15, 16, 25, 42 ]
+
+    const c = new SpokenQuote(["Good is so descructive", "It destroys everything"])
+        .lines;
+    console.log(c);
+    // Log: [ 'Good is so descructive', 'It destroys everything' ]
+
+    const d = new SpokenQuote([4, 8, 15, 16, 25, 42]);
+    // Error: Type 'number' is not assignable to type 'string'.
+    console.log(d);
+    // Log: SpokenQuote { lines: [ 4, 8, 15, 16, 25, 42 ] }
+
+    ```
+
+    -   SpokenQuote 클래스는 기본 클래스 Quote\<T>에 대한 T 타입 인수로 string을 제공한다
+
+-   제네릭 파생 클래스는 자체 타입 인수를 기본 클래스에 번갈아 전달할 수 있다.
+
+    -   [attributeQuote.ts](./chap10/attributeQuote.ts)
+
+    ```
+    class AttributeQuote<Value> extends Quote<Value> {
+        speaker: string;
+
+        constructor(value: Value, speaker: string) {
+            super(value);
+            this.speaker = speaker;
+        }
+    }
+
+    // type: AttirbuteQuote<string>
+    // (Quote<string> 확장하기)
+    const a = new AttributeQuote(
+        "The road to success is always under construction.",
+        "Lily tomlin"
+    );
+
+    console.log("attributeQuote", a);
+    // Log :
+    // AttributeQuote {
+    //   lines: 'The road to success is always under construction.',
+    //   speaker: 'Lily tomlin'
+    // }
+
+    ```
+
+    -   AttributeQuote는 다름 이름의 Value 타입 인수를 기본 클래스 Quote\<T>에 전달한다.
+
 <br>
 
 ### 10.3.3 제네릭 인터페이스 구현
+
+-   제네릭 클래스는 모든 필요한 매개변수를 제공함으로써 제네릭 인터페이스를 구현한다.
+-   제네릭 인터페이스는 제네릭 기본 클래스를 확장하는 것과 유사하게 작동한다.
+-   기본 인터페이스의 모든 타입 매개변수는 클래스에 선언되어야 한다.
+
+    -   [actingCredit.ts](./chap10/actingCredit.ts)
+
+    ```
+    interface ActingCredit<Role> {
+        role: Role;
+    }
+
+    class MoviePart implements ActingCredit<string> {
+        role: string;
+        speaking: boolean;
+
+        constructor(role: string, speaking: boolean) {
+            this.role = role;
+            this.speaking = speaking;
+        }
+    }
+
+    const part = new MoviePart("Miranda Priestly", true);
+
+    const a = part.role; // type: string
+    console.log(a); // Log:  Miranda Priestly
+
+    class IncorrectExtension implements ActingCredit<string> {
+        role: boolean;
+        // Error: Property 'role' in type 'IncorrectExtension' is not assignable to the same property in base type 'ActingCredit<string>'.
+        //   Type 'boolean' is not assignable to type 'string'.
+    }
+
+    ```
 
 <br>
 
 ### 10.3.4 메서드 제네릭
 
+-   제네릭 클래스 메서드에 대한 각각의 호출은 각 타입 매개변수에 대해 다른 타입 인수를 갖는다.
+
+    -   [createPairFactory.ts](./chap10/createPairFactory.ts)
+
+    ```
+    class CreatePairFacotory<Key> {
+        key: Key;
+
+        constructor(key: Key) {
+            this.key = key;
+        }
+
+        createPair<Value>(value: Value) {
+            return {
+                key: this.key,
+                value,
+            };
+        }
+    }
+
+    const facotry = new CreatePairFacotory("role");
+    // type: CreatePairFacotory<stirng>
+    console.log("facotry: ", facotry);
+    // Log: CreatePairFacotory { key: 'role' }
+
+    const numberPair = facotry.createPair(10);
+    // type: { key: string, value: number}
+    console.log("numberPair: ", numberPair);
+    // Log: { key: 'role', value: 10 }
+
+    const stringPair = facotry.createPair("Sophine");
+    // type: { key: string, value: string }
+    console.log("stringPair: ", stringPair);
+    // Log: { key: 'role', value: 'Sophine' }
+    ```
+
+    -   CreatePairFacotory 클래스는 Key 타입을 선언하고 별도의 Value 제네릭 타입을 선언하는 creatPair 메서드를 포함한다.
+    -   creatPair의 반환 타입은 { key: Key, value: Value}로 유추된다.
+
 <br>
 
 ### 10.3.5 정적 클래스 제네릭
+
+-   클래스의 정적 static 멤버는 인스턴스 멤버와 구별되고 클래스의 특정 인스턴스와 연결되어 있지 않다.
+-   정적 클래스 메서드는 자체 타입 매개변수를 선언할 수 있지만 클래스에 선언된 어떤 타입 매개변수에도 접근할 수 없다.
+
+    -   [bothLogger.ts](./chap10/bothLogger.ts)
+
+    ```
+    class BothLogger<OnInstance> {
+        instanceLog(value: OnInstance) {
+            console.log(value);
+            return value;
+        }
+
+        static staticLog<OnStatic>(value: OnStatic) {
+            let fromInstance: OnInstance;
+            // Error: Static members cannot reference class type parameters.
+
+            console.log(value);
+            return value;
+        }
+    }
+
+    const logger = new BothLogger<number[]>();
+    logger.instanceLog([1, 2, 3]); // type: number[]
+    // Log: [ 1, 2, 3 ]
+
+    // 유추된 OnStatic 타입 인수 : boolean[]
+    BothLogger.staticLog([false, true]);
+    // Log: [ false, true ]
+
+    // 유추된 OnStatic 타입 인수 : string
+    BothLogger.staticLog<string>("You can't change the music of your soul.");
+    // Log: You can't change the music of your soul.
+
+    ```
+
+    -   클래스 인스턴스에 대해 OnInstance가 선언되었으므로 static 메서드는 OnInstance 인스턴스에 접근할 수 없다.
 
 <br>
 
@@ -321,9 +580,70 @@
 
 ## 10.4 제네릭 타입 별칭
 
+-   각 타입 별칭에는 T를 받는 Nullish 타입과 같은 임의의 수의 타입 매개변수가 주어진다.
+    ```
+    type Nullish<T> = T | null | undefined;
+    ```
+-   제네릭 타입 별칭은 일반적으로 제네릭 함수의 타입을 설명하는 함수와 함께 사용된다.
+
+    -   [createsValue.ts](./chap10/createsValue.ts)
+
+    ```
+    type CreatesValue<Input, Output> = (input: Input) => Output;
+
+    // type: (input: string) => number
+    let creater: CreatesValue<string, number>;
+
+    creater = (text) => text.length; // Ok
+
+    creater = (text) => text.toUpperCase();
+    // Error: Type 'string' is not assignable to type 'number'.
+
+    ```
+
 <br>
 
 ### 10.4.1 제네릭 판별된 유니언
+
+-   4장 '객체'에서 언급한 판별된 유니언은 우아한 자바스크립트 패텬과 타입스크립트의 내로잉을 아름답게 결합하므로 타입스크립트에서 필자가 가장 좋아하는 기능
+-   판별 유니언 사용법 중 필자가 가장 좋아하는 용도는 데이터의 성공적인 결과 또는 오류로 인한 실패를 나타내는 제네릭 '결과' 타입을 만들기 위해 타입 인수를 추가하는 것
+
+    -   [result.ts](./chap10/result.ts)
+
+    ```
+    type Result<Data> = FailureResult | SuccessfullResult<Data>;
+
+    interface FailureResult {
+        error: Error;
+        successed: false;
+    }
+
+    interface SuccessfullResult<Data> {
+        data: Data;
+        successed: true;
+    }
+
+    function handleResult(result: Result<string>) {
+        if (result.successed) {
+            // result: SuccessfullResult<string>의 타입
+            console.log(`We did it! ${result.data}`);
+        } else {
+            // result: FailureResult의 타입
+            console.error(`Awww... ${result.error}`);
+            // Error: Property 'error' does not exist on type 'Result<string>'.
+            //   Property 'error' does not exist on type 'SuccessfullResult<string>'.
+            // 책에서는 이 에러에 대한 언급이 없음.
+        }
+
+        result.data;
+        // Error:  Property 'data' does not exist on type 'Result<string>'.
+        //   Property 'data' does not exist on type 'FailureResult'.
+    }
+
+    ```
+
+    -   Result을 반환하는 모든 작업은 오류 또는 데이터 결과를 나타내며 이를 사용하는 곳에서는 result의 succeeded가 true인지 여부를 확인해야 한다.
+    -   제네릭 타입과 판별된 타입을 함께 사용하면 Result와 같은 재사용 가능한 타입을 모델링하는 훌륭한 방법을 제공할 수 있다.
 
 <br>
 

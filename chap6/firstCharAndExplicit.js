@@ -6,4 +6,4 @@ function firstCharAndExplicit(input) {
 }
 // firstChar 타입: string
 // size 타입: number
-var _a = firstCharAndExplicit("Cathay Williams"), firstChar = _a[0], size = _a[1];
+const [firstChar, size] = firstCharAndExplicit("Cathay Williams");

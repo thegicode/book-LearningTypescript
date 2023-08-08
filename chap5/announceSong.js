@@ -1,9 +1,15 @@
+"use strict";
 function announceSong(song, singer) {
-    console.log("Song: ".concat(song));
+    console.log(`Song: ${song}`);
     if (singer) {
-        console.log("Singer: ".concat(singer));
+        console.log(`Singer: ${singer}`);
     }
 }
-announceSong("GreensLeeves");
-announceSong("GreensLeeves", undefined);
-announceSong("Chandelier", "Sia");
+announceSong("GreensLeeves"); // Ok
+// Logs : Song: GreensLeeves
+announceSong("GreensLeeves", undefined); // Ok
+// Logs : Song: GreensLeeves
+announceSong("Chandelier", "Sia"); // Ok
+// Logs :
+// Song: Chandelier
+// Singer: Sia

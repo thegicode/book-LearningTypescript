@@ -1,9 +1,10 @@
-var WithPropertyParameters = /** @class */ (function () {
-    function WithPropertyParameters() {
-        this.tackesParameters = function (input) { return (input ? "yes" : "No"); };
+"use strict";
+class WithPropertyParameters {
+    constructor() {
+        this.tackesParameters = (input) => (input ? "yes" : "No");
     }
-    return WithPropertyParameters;
-}());
-var instance = new WithPropertyParameters();
+}
+const instance = new WithPropertyParameters();
 instance.tackesParameters(true); // Ok
 instance.tackesParameters(123);
+// Error : Argument of type 'number' is not assignable to parameter of type 'boolean'.

@@ -1,9 +1,13 @@
-var peetMatch = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const peetMatch = {
     born: 1928,
     name: "Maya Angelou",
 };
-var extraProperty = {
+const extraProperty = {
     activity: "walking",
+    // Error: Type '{ activity: string; born: number; name: string; }' is not assignable to type 'Poet'.
+    // Object literal may only specify known properties, and 'activity' does not exist in type 'Poet'.
     born: 1935,
     name: "Mary Oliver",
 };

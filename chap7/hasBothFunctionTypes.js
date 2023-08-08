@@ -1,6 +1,7 @@
-var hasBoth = {
-    property: function () { return ""; },
-    method: function () {
+"use strict";
+const hasBoth = {
+    property: () => "",
+    method() {
         return "";
     },
 };

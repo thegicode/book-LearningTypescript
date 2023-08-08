@@ -1,7 +1,8 @@
-var ok = {
+"use strict";
+const ok = {
     author: "Rita Dove",
     pages: 80,
 };
-var missing = {
+const missing = {
     pages: 880,
 };

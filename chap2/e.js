@@ -1,1 +1,3 @@
-var shared = "Cher";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const shared = "Cher";

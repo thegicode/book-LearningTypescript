@@ -1,47 +1,23 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var GradeCounter = /** @class */ (function () {
-    function GradeCounter() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class GradeCounter {
+    countGrades(grades, letter) {
+        return grades.filter((grade) => grade === letter).length;
     }
-    GradeCounter.prototype.countGrades = function (grades, letter) {
-        return grades.filter(function (grade) { return grade === letter; }).length;
-    };
-    return GradeCounter;
-}());
-var FailureCounter = /** @class */ (function (_super) {
-    __extends(FailureCounter, _super);
-    function FailureCounter() {
-        return _super !== null && _super.apply(this, arguments) || this;
+}
+class FailureCounter extends GradeCounter {
+    countGrades(grades) {
+        return super.countGrades(grades, "F");
     }
-    FailureCounter.prototype.countGrades = function (grades) {
-        return _super.prototype.countGrades.call(this, grades, "F");
-    };
-    return FailureCounter;
-}(GradeCounter));
-var AnyFailureChecker = /** @class */ (function (_super) {
-    __extends(AnyFailureChecker, _super);
-    function AnyFailureChecker() {
-        return _super !== null && _super.apply(this, arguments) || this;
+}
+class AnyFailureChecker extends GradeCounter {
+    countGrades(grades) {
+        // Error: TS2416: Property 'countGrades' in type 'AnyFailureChecker' is not assignable to the same property in base type 'GradeCounter'.
+        //   Type '(grades: string[]) => boolean' is not assignable to type '(grades: string[], letter: string) => number'.
+        //   Type 'boolean' is not assignable to type 'number'.
+        return super.countGrades(grades, "F") !== 0;
     }
-    AnyFailureChecker.prototype.countGrades = function (grades) {
-        return _super.prototype.countGrades.call(this, grades, "F") !== 0;
-    };
-    return AnyFailureChecker;
-}(GradeCounter));
-var counter = new AnyFailureChecker();
-// 예상한 타입: number
+}
+const counter = new AnyFailureChecker();
 // 실제 타입 : boolean
-var count = counter.countGrades(["A", "C", "F"]);
+const count = counter.countGrades(["A", "C", "F"]);

@@ -1,5 +1,6 @@
-var songLogger;
-songLogger = function (song) {
-    console.log("".concat(song));
+"use strict";
+let songLogger;
+songLogger = (song) => {
+    console.log(`${song}`);
 };
 songLogger("Heart of Glass");

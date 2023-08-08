@@ -1,9 +1,11 @@
-var stringBox = {
+"use strict";
+let stringBox = {
     inside: "abc",
 };
-var numberBox = {
+let numberBox = {
     inside: 123,
 };
-var incorrectBox = {
+let incorrectBox = {
     inside: false,
+    // Error: Type 'boolean' is not assignable to type 'number'.
 };

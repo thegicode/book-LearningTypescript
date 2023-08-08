@@ -1,11 +1,12 @@
-var TwoKeywords = /** @class */ (function () {
-    function TwoKeywords() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class TwoKeywords {
+    constructor() {
         this.name = "Anne Sulivan";
     }
-    TwoKeywords.prototype.log = function () {
+    log() {
         console.log(this.name);
-    };
-    return TwoKeywords;
-}());
-var two = new TwoKeywords();
+    }
+}
+const two = new TwoKeywords();
 two.name = "Savitribal Phule";

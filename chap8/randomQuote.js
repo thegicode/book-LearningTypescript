@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var RandomQuote = /** @class */ (function () {
-    function RandomQuote() {
+class RandomQuote {
+    constructor() {
         this.explicit = "Home is the nicest word there is";
         this.implicit = "Home is the nicest word there is";
         if (Math.random() > 0.5) {
@@ -10,8 +10,7 @@ var RandomQuote = /** @class */ (function () {
             // Error : Type '"We start learnig the minute we're born"' is not assignable to type '"Home is the nicest word there is"'.
         }
     }
-    return RandomQuote;
-}());
-var quote = new RandomQuote();
+}
+const quote = new RandomQuote();
 console.log(quote.explicit); // 타입: string
 console.log(quote.implicit); // 타입: "Home is the nicest word there is"

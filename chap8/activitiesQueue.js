@@ -1,14 +1,13 @@
-var ActivitiesQueue = /** @class */ (function () {
-    function ActivitiesQueue() {
-    }
-    ActivitiesQueue.prototype.initialize = function (pending) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class ActivitiesQueue {
+    initialize(pending) {
         this.pending = pending;
-    };
-    ActivitiesQueue.prototype.next = function () {
+    }
+    next() {
         return this.pending.pop();
-    };
-    return ActivitiesQueue;
-}());
-var activities = new ActivitiesQueue();
+    }
+}
+const activities = new ActivitiesQueue();
 activities.initialize(["eat", "sleep", "learn"]);
 activities.next();

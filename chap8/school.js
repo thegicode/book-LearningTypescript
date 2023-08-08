@@ -1,44 +1,20 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var School = /** @class */ (function () {
-    function School(name) {
+class School {
+    constructor(name) {
         this.name = name;
     }
-    return School;
-}());
-var Preschool = /** @class */ (function (_super) {
-    __extends(Preschool, _super);
-    function Preschool() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Preschool.prototype.getStudentTypes = function () {
+}
+class Preschool extends School {
+    getStudentTypes() {
         return ["preschooler"];
-    };
-    return Preschool;
-}(School));
-// Absence: 결석
-var Absence = /** @class */ (function (_super) {
-    __extends(Absence, _super);
-    function Absence() {
-        return _super !== null && _super.apply(this, arguments) || this;
     }
-    return Absence;
-}(School));
-var school;
+}
+// Absence: 결석
+class Absence extends School {
+}
+// Error: Non-abstract class 'Absence' does not implement all abstract members of 'School'
+// 비추상 클래스 'Absence'은(는) 'School' 클래스에서 상속된 추상 멤버 'getStudentTypes'을(를) 구현하지 않습니다.
+let school;
 school = new Preschool("Sunnyside Daycare");
 school = new School("somewhere else");

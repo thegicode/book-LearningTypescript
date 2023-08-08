@@ -1,14 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var myNovella = {
+let myNovella = {
     pages: 195,
     title: "Ethan Frome",
 };
-var missingPage = {
+let missingPage = {
+    // Error : Property 'pages' is missing in type '{ title: string; }' but required in type 'Novella'.
     title: "The Awakening",
 };
-var extraProperty = {
+let extraProperty = {
     page: 300,
+    // Error :  Type '{ page: number; strategy: string; style: string; }' is not assignable to type 'Novella'.
     strategy: "baseline",
     style: "Naturalism",
 };

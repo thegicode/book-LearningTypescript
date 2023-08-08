@@ -1,4 +1,5 @@
-var valueLater;
+"use strict";
+let valueLater;
 valueLater = {
     born: 1935,
     name: "Sara Tesadale",

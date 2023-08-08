@@ -1,4 +1,6 @@
-var ratings = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ratings = {
     imdb: 8.4,
     metacritic: 82,
 };

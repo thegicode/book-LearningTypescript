@@ -1,14 +1,18 @@
-var songs = ["Juice", "Shake It Off", "What's Up"];
+"use strict";
+const songs = ["Juice", "Shake It Off", "What's Up"];
 function runOnSongs(getSongAt) {
-    for (var i = 0; i < songs.length; i++) {
+    for (let i = 0; i < songs.length; i++) {
         console.log(getSongAt(i));
     }
 }
 function getSongAt(index) {
-    return "".concat(songs[index]);
+    return `${songs[index]}`;
 }
 runOnSongs(getSongAt);
 function logSong(song) {
-    return "".concat(song);
+    return `${song}`;
 }
 runOnSongs(logSong);
+// Error : Argument of type '(song: string) => string' is not assignable to parameter of type '(index: number) => string'.
+// Types of parameters 'song' and 'index' are incompatible.
+// Type 'number' is not assignable to type 'string'.

@@ -1,5 +1,6 @@
+"use strict";
 function singTwo(first, second) {
-    console.log("".concat(first, " / ").concat(second));
+    console.log(`${first} / ${second}`);
 }
 singTwo("Ball and Chain");
 // Error : Expected 2 arguments, but got 1.
@@ -8,3 +9,4 @@ singTwo("I Will Surive", "Higher Love");
 // Logs : I Will Surive / Higher Love
 singTwo("Go Your Own Way", "The Chain", "Dreams");
 // Error : Expected 2 arguments, but got 3.
+// Logs : Go Your Own Way / The Chain

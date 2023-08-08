@@ -1,5 +1,7 @@
+"use strict";
 // Ok : author는 undefined으로 제공됨
-var hasRequired = {
+const hasRequired = {
     author: undefined,
 };
-var missingRequired = {};
+const missingRequired = {};
+// Error :  Property 'author' is missing in type '{}' but required in type 'Writers'.

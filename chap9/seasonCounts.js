@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var seasonCounts = new Map([
+const seasonCounts = new Map([
     ["I love Lucy", "6"],
     ["The Golden Grils", "7"],
 ]);
 // 타입: string : undefined
-var maybeValue = seasonCounts.get("I love Lucy");
+let maybeValue = seasonCounts.get("I love Lucy");
 console.log(maybeValue.toUpperCase());
-// Error: Property 'toUpperCase' does not exist on type 'number'.
+// Error: 'maybeValue'은(는) 'undefined'일 수 있습니다.
 // 타입: string
-var knownValue = seasonCounts.get("I love Lucy");
-// Error: Property 'toUpperCase' does not exist on type 'number'.
+const knownValue = seasonCounts.get("I love Lucy");
 console.log(knownValue.toUpperCase());
