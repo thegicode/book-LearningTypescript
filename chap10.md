@@ -653,9 +653,73 @@
 
 ## 10.5 제네릭 제한자
 
+-   타입스크립트는 제네릭 타입 매개변수의 동작을 수정하는 구문도 제공한다.
+
 <br>
 
 ### 10.5.1 제네릭 기본값
+
+-   타입 매개변수 선언 뒤에 =와 기본 타입을 배치해 타입 인수를 명시적으로 제공할 수 있다.
+-   기본값은 타입 인수가 명시적으로 선언되지 않고 유추할 수 없는 모든 후속 타입에 사용될 수 있다.
+
+    -   [quoteTypes.ts](./chap10/quoteType.ts)
+
+    ```
+    interface Quote<T = string> {
+        value: T;
+    }
+
+    let expicit: Quote<number> = { value: 123 };
+
+    let implicit: Quote = { value: "Be your slef" };
+
+    let mismatch: Quote = { value: 123 };
+    // Error: Type 'number' is not assignable to type 'string'.
+    ```
+
+-   타입 매개변수는 동일한 선언 안의 앞선 타입 매개변수를 기본값으로 가질 수 있다.
+-   각 타입 매개변수는 선언에 대한 새로운 타입을 도입하므로 해당 선언 이후의 타입 매개변수에 대한 기본값으로 이를 사용할 수 있다.
+
+    -   [keyValuePair.ts](./chap10/keyValuePair.ts)
+
+    ```
+    interface KeyValuePair<Key, Value = Key> {
+       key: Key;
+       value: Value;
+    }
+
+    // type: KeyValuePair<string, number>
+    let allExpicit: KeyValuePair<string, number> = {
+       key: "rating",
+       value: 10,
+    };
+
+    // type: KeyValuePair<string>
+    let OneDEfaulting: KeyValuePair<string> = {
+       key: "rating",
+       value: "ten",
+    };
+
+    let firstMissing: KeyValuePair = {
+       // Error: Generic type 'KeyValuePair<Key, Value>' requires between 1 and 2 type arguments.
+       key: "rating",
+       value: 10,
+    };
+
+    ```
+
+-   모든 기본 타입 매개변수는 기본 함수 매개변수처럼 선언 목록의 제일 마지막에 와야 한다.
+-   기본값이 없는 제네릭 타입은 기본값이 있는 제네릭 타입 뒤에 오면 안된다.
+
+    -   [inTheEnd.ts](./chap10/inTheEnd.ts)
+
+    ```
+    function inTheEnd<First, Second, Third = number, Foruth = string>() {} // Ok
+
+    function inTheMiddle<First, Second = boolean, Third = number, Fourth>() {}
+    // Error: Required type parameters may not follow optional type parameters.
+
+    ```
 
 <br>
 
