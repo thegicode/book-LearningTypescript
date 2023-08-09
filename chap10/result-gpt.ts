@@ -1,29 +1,21 @@
-type Result<Data> = FailureResult | SuccessfullResult<Data>;
+type Result<Data> = FailureResult | SuccessfulResult<Data>;
 
 interface FailureResult {
     error: Error;
-    successed: false;
+    succeeded: false;
 }
 
-interface SuccessfullResult<Data> {
+interface SuccessfulResult<Data> {
     data: Data;
-    successed: true;
-}
-
-function isSuccessfullResult<Data>(
-    result: Result<Data>
-): result is SuccessfullResult<Data> {
-    return result.successed;
+    succeeded: true;
 }
 
 function handleResult(result: Result<string>) {
-    if (isSuccessfullResult(result)) {
+    if (result.succeeded === true) {
+        // TypeScript now knows that result is SuccessfulResult<string>
         console.log(`We did it! ${result.data}`);
     } else {
+        // TypeScript now knows that result is FailureResult
         console.error(`Awww... ${result.error}`);
     }
-
-    // 이 시점에서 'result.data'에 접근하려 하면 여전히 오류가 발생합니다.
 }
-
-export {};
