@@ -729,9 +729,81 @@
 
 ## 10.6 제한된 제네릭 타입
 
+-   <ins>타입 매개변수를 제한하는 구문은 매개변수 이름 뒤에 extends 키워드를 배치하고 그 뒤에 이를 제한할 타입을 배치한다.</ins>
+
+    -   [withLength.ts](./chap10/withLength.ts)
+
+    ```
+    interface WithLength {
+        length: number;
+    }
+
+    function logWithLength<T extends WithLength>(input: T) {
+        console.log(`Length: ${input.length}`);
+        return input;
+    }
+
+    logWithLength("No one can figure out your worth but you."); // type: string
+    logWithLength([false, true]); // type: boolean[]
+    logWithLength({ length: 123 }); // type: { length: number }
+
+    logWithLength(new Date());
+    // Error: Argument of type 'Date' is not assignable to parameter of type 'WithLength'.
+    //   Property 'length' is missing in type 'Date' but required in type 'WithLength'.
+
+    ```
+
+    -   length: number를 가진 모든 것을 설명하기 위해 WithLength 인터페이스를 생성하면 제네릭 함수가 T 제네릭에 대한 length를 가진 모든 타입을 받아들이도록 구현할 수 있다.
+
 <br>
 
 ### 10.6.1 kyeof와 제한된 타입 매개변수
+
+-   9장 '타입 제한자'에서 소개한 keyof 연산자는 제한된 타입 매개변수와도 잘 작동한다.
+-   <ins>extends와 keyof를 함께 사용하면 타입 매개변수를 이전 타입 매개변수의 키로 제한할 수 있다.</ins>
+-   또한 제네릭 타입의 키를 지정하는 유일한 방법이기도 하다.
+
+    -   [get.ts](./chap10/get.ts)
+
+    ```
+    function get<T, Key extends keyof T>(container: T, key: Key) {
+        return container[key];
+    }
+
+    const roles = {
+        favorite: "fargo",
+        others: ["Alomist Famous", "Burn after Reading", "Nomadland"],
+    };
+
+    const favorite = get(roles, "favorite"); // type: string
+    const others = get(roles, "others"); // type: string[]
+
+    const missing = get(roles, "extras");
+    // Error: Argument of type '"extras"' is not assignable to parameter of type '"favorite" | "others"'.
+    ```
+
+    -   인기있는 Loadash의 get 메서드의 간단한 버전이다.
+    -   Key 타입 매개변수는 keyof T로 제한되기 때문에 타입스크립트는 이 함수가 T\[Key]를 반환
+    -   keyof가 없었다면 제네릭 key 매개변수를 올바르게 입력할 방법이 없었을 것이다.
+
+-   타입 매개변수로 T만 제공되고 key 매개변수가 모든 keyof T일 수 있는 경우라면 Container에 있는 모든 속성값에 대한 유니언 타입이 된다.
+
+    -   [get2.ts](./chap10/get2.ts)
+
+    ```
+    function get<T>(container: T, key: keyof T) {
+        return container[key];
+    }
+
+    const roles = {
+        favorite: "fargo",
+        others: ["Alomist Famous", "Burn after Reading", "Nomadland"],
+    };
+
+    const found = get(roles, "favorite"); // type: string | string[]
+    ```
+
+-   제네릭 함수를 작성할 때 매개변수의 타입이 이전 매개변수 타입에 따라 달라지는 경우를 알아야 한다. 이러한 경우 올바른 매개변수 타입을 위해 제한된 타입 매개변수를 자주 사용하게 된다.
 
 <br>
 
