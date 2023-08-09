@@ -813,13 +813,104 @@
 
 ## 10.7 Promise
 
+-   각 Promise는 대기 중인 작업이 'resolve' 또는 'reject'하는 경우 콜백을 등록하기 위한 메서드를 제공한다.
+-   임의의 값 타입에 대해 유사한 작업을 나타내는 Promise의 기능은 타입스크립트의 제네릭과 자연스럽게 융합된다.
+-   Promise는 타입스크립트 타입 시스템에서 최종적으로 resolve된 값을 나타내는 단일 타입 매개변수를 가진 Promise 클래스로 표현된다.
+
 <br>
 
 ### 10.7.1 Promise 생성
 
+-   타입스크립트에서 Promise 생성자는 단일 매개변수를 받도록 작성된다.
+-   해당 매개변수의 타입은 제네릭 Promise 클래스에 선언된 매개변수에 의존한다.
+-   <ins>축소된 형식은 다음과 같다.</ins>
+
+    -   [promiseLike.ts](./chap10/promiseLike.ts)
+
+    ```
+    class PromiseLike<Value> {
+        constructor(
+            executor: (
+                resolve: (value: Value) => void,
+                reject: (reason: unknown) => void
+            ) => void
+        ) {
+            //
+        }
+    }
+    ```
+
+-   결과적으로 값을 resolve하려는 Promise를 만들려면 Promise의 타입 인수를 명시적으로 선언해야 한다.
+-   Promise 생성자에 타입 인수를 명시적으로 제공하면 타입스크립트가 결과로서 생기는 Promise 인스턴스의 resolve된 타입을 이해할 수 있다.
+
+    -   <ins>[resolve.ts](./chap10/resolve.ts)</ins>
+
+    ```
+    // type: Promise<unknown>
+    const resolveUnknown = new Promise((resolve) => {
+        setTimeout(() => resolve("Done!"), 1000);
+    });
+
+    // type: Promise<string>
+    const resolveString = new Promise<string>((resolve) => {
+        setTimeout(() => resolve("Done!"), 1000);
+    });
+    ```
+
+-   <ins>Promise의 제네릭 .then 메서드는 반환되는 Promise의 resolve된 값을 나타내는 새로운 타입 매개변수를 받는다.</ins>
+
+    -   [then.ts](./chap10/then.ts)
+
+    ```
+    // type: Promise<string>
+    const textEventually = new Promise<string>((resolve) => {
+        setTimeout(() => resolve("Done!"), 1000);
+    });
+
+    // type: Promise<number>
+    const lengthEvnetually = textEventually.then((text) => text.length);
+
+    ```
+
 <br>
 
 ### 10.7.2 async 함수
+
+-   자바스크립트에서 async 키워드를 사용해 선언한 모든 함수는 Promise를 반환한다.
+-   자바스크립트에서 async 함수에 따라서 반환된 값이 Thenable(.then() 메서드가 있는 객체, 실제로는 거의 항상 Promise)이 아닌 경우, Promise.resolve가 호출된 것처럼 Promise로 wrapping된다.
+
+    -   [lefthAfterSecond.ts](./chap10/lefthAfterSecond.ts)
+
+    ```
+    // type: (text: string) => Promise<number>
+    async function lengthAfterSecond(text: string) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        return text.length;
+    }
+
+    // type: (text: string) => Promise<number>
+    async function lengthImmediately(text: string) {
+        return text.length;
+    }
+    ```
+
+    -   lengthAfterSecond는 Promise\<number>를 직접적으로 반환하는 반면,
+    -   lengthImmediately는 async 함수이고, 직접 number를 반환하기 때문에 Promise\<number>를 반환하는 것으로 간주된다.
+
+-   그러므로 Promise를 명시적으로 언급하지 않더라도 async 함수에서 수동으로 선언된 반환 타입은 항상 Promise 타입이 된다.
+
+    -   [givesPromiseForString.ts](./chap10/givesPromiseForString.ts)
+
+    ```
+    async function givesPromiseForString(): Promise<string> {
+        return "Done!";
+    }
+
+    async function giveString(): string {
+        // Error: Type 'string' is not a valid async function return type in ES5/ES3 because it does not refer to a Promise-compatible constructor value.
+        return "Done!";
+    }
+    ```
 
 <br>
 
