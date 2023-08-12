@@ -341,9 +341,52 @@
 
 ## 11.4 모듈 선언
 
+-   선언 파일의 또 다른 중요한 기능은 모듈의 상태를 설명하는 기능이다.
+-   모듈의 문자열 이름 앞에 declare 키워드를 사용하면 모듈의 내용을 타입 시스템에 알릴 수 있다.
+-   다음 "my-example-lib"은 module.d.ts 선언 스크립트 파일에 존재하도록 선언한 다음, index.ts 파일에서 사용된다.
+
+    ```
+    // modules.d.ts
+    declare module "my-example-lib" {
+        export const value: string;
+    }
+    ```
+
+    ```
+    // index.ts
+    import { value } from "mu-example-lib"
+
+    console.log(value)
+    ```
+
+-   코드에서 declare module을 자주 사용해서는 안된다.
+
 <br>
 
 ### 11.4.1 와일드카드 모듈 선언
+
+-   모듈 선언은 자바스크립트와 타입스크립트 파일 확장자가 아닌 특정 파일의 내용을 코드로 가져올 수 있음을 웹 애플리케이션에 알리기 위해 사용한다.
+-   모듈 선언으로 하나의 \* 와일드카드를 포함해 해당 패텬과 일치하는 모든 모듈을 나타낼 수 있다.
+-   예, create-reat-app과 create-next-app 같은 인기 있는 리액트 starter에 미리 구성된 것처럼 많은 웹 프로젝트는 CSS 모듈을 지원하면 CSS 파일에서 런타임에 사용할 수 있는 객체로 스타일을 가져온다.
+
+    ```
+    // style.d.ts
+    declare module = "*.module.css" {
+        const style: { [i: string]: string};
+        export default styles;
+    }
+    ```
+
+    ```
+    // component.ts
+    import styles form "./styles.module.css";
+
+    styles.anyClassName; // type: string
+    ```
+
+-   [Warning] 와일드카드 모듈을 사용해 로컬 파일을 나타내는 방식이 타입 안정성을 완벽히 보장하지는 않는다.
+    -   타입스크립트가 가져온 모듈 경로가 로컬 파일과 일치하는지 확인하는 매커니즘을 제공하지는 않는다.
+    -   일부 프로젝트는 웹팩같은 빌드 시스템을 사용하거나 로컬 파일에서 .d.ts 파일을 생성해 가져오기가 가능한지 확인한다.
 
 <br>
 
