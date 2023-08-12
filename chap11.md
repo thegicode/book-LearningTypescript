@@ -229,13 +229,109 @@
 
 ## 11.3 내장된 선언
 
+-   Array, Function, Map, Set과 같은 전역 객체는 타입 시스템이 알아야 하지만 코드에서 선언되지 않는 구문이다.
+-   이와 같은 전역 객체는 디노, Node.js, 웹 브라우저 등에서 실행되는 런타임 코드에 의해 제공된다.
+
 <br>
 
 ### 11.3.1 라이브러리 선언
 
+-   모든 자바스크립트 런타임에 존재하는 Array, Function 같은 내장된 전역 객체는 lib.\[target].d.ts 파일 이름으로 선언된다.
+-   여기에서 target은 ES5, ES2020 또는 ESNext와 같이 프로젝트에서 대상으로 하는 자바스크립트의 최소 지원 버전이다.
+-   [lib.es5.d.ts](/node_modules/typescript/lib/lib.es5.d.ts)
+
+    ```
+    interface Array<T> {
+    /**
+     * Gets or sets the length of the array. This is a number one higher than the highest index in the array.
+     */
+    length: number;
+    /**
+     * Returns a string representation of an array.
+     */
+    toString(): string;
+    ```
+
+-   VS Code : 내장 메서드에서 오른쪽 마우스 클릭, [Go to Definition]
+
+<br>
+
+#### 라이브러리 target
+
+-   타입스크립트는 기본적으로 tsc CLI 또는 프로젝트의 tsconfig.json(기본값은 es5)에서 제공된 target 설정에 따라 적절한 lib 파일을 포함한다.
+-   자바스크립트 최신 버전에 대한 연속적인 lib 파일들은 인터페이스 병합을 사용해 서로 빌드된다.
+-   예, ES2015에 추가된 EPSILON, ifFinite와 같은 정적 Number 멤버는 lib2015.d.ts에 나열된다.
+
+    -   [lib.es2015.core.d.ts](/node_modules/typescript/lib/lib.es2015.core.d.ts)
+
+    ```
+    interface NumberConstructor {
+    /**
+     * The value of Number.EPSILON is the difference between 1 and the smallest value greater than 1
+     * that is representable as a Number value, which is approximately:
+     * 2.2204460492503130808472633361816 x 10‍−‍16.
+     */
+    readonly EPSILON: number;
+
+    /**
+     * Returns true if passed value is finite.
+     * Unlike the global isFinite, Number.isFinite doesn't forcibly convert the parameter to a
+     * number. Only finite values of the type number, result in true.
+     * @param number A numeric value.
+     */
+    isFinite(number: unknown): boolean;
+
+    /**
+     * Returns true if the value passed is an integer, false otherwise.
+     * @param number A numeric value.
+     */
+    isInteger(number: unknown): boolean;
+    ```
+
+-   타입스크립 프로젝트는 target으로 지정한 자바스크립트 버전의 모든 최소 버전 lib 파일을 포함한다.
+
+    -   예, target이 es2016인 프로젝트에는 lib.es5.d.ts, lib.es2015.d.ts, lib.es2016.d.ts까지 포함된다.
+
+-   [TIP] target보다 최신 버전의 자바스크립트에서만 사용할 수 있는 기능은 타입 시스템에서 사용할 수 없다.
+    -   예, target이 es5이면 String.prototype.startsWith와 같은 es2015 이상의 기능은 인식되지 않는다.
+
 <br>
 
 ### 11.3.2 DOM 선언
+
+-   DOM Document Object Model 타입이라고 하는 웹 브라우저 타입은 localStorage와 같은 API와 웹 브라우저에서 주로 사용하는 HTMLElement와 같은 타입 형태를 다룬다.
+-   DOM 타입은 lib.dom.d.ts 파일과 다른 lib.\*.d.ts 선언 파일에도 저장된다.
+-   많은 내장 전역 타입처럼 전역 DOM 타입은 종종 전역 인터페이스로 설명된다.
+    -   [lib.dom.d.ts](/node_modules/typescript/lib/lib.dom.d.ts)
+    ```
+    interface Storage {
+        /**
+        * Returns the number of key/value pairs.
+        *
+        * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Storage/length)
+        */
+        readonly length: number;
+        /**
+        * Removes all key/value pairs, if there are any.
+        *
+        * Dispatches a storage event on Window objects holding an equivalent Storage object.
+        *
+        * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Storage/clear)
+        */
+        clear(): void;
+        /**
+        * Returns the current value associated with the given key, or null if the given key does not exist.
+        *
+        * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Storage/getItem)
+        */
+        getItem(key: string): string | null;
+        /**
+        * Returns the name of the nth key, or null if n is greater than or equal to the number of key/value pairs.
+        *
+        * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Storage/key)
+        */
+    ```
+-   lib 컴파일러 옵션을 재정의하지 않는 타입스크립트 프로젝트는 DOM 타입을 기본으로 포함한다.
 
 <br>
 
