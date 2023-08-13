@@ -372,7 +372,7 @@
     ```
     // style.d.ts
     declare module = "*.module.css" {
-        const style: { [i: string]: string};
+        const styles: { [i: string]: string};
         export default styles;
     }
     ```
@@ -400,13 +400,108 @@
 
 ### 11.5.1 선언
 
+-   타입스크립트는 입력된 파일에 대한 .d.ts 출력 파일과 자바스크립트 출력 파일을 함께 생성하는 선언 옵션을 제공한다.
+
+    ```
+    // index.ts
+    export const greet = (text: string) => {
+        console.log(`Hello, ${text}!`);
+    }
+    ```
+
+    -   module은 es2015, target은 2015인 선언 옵션을 사용해 다음 출력 파일을 생성한다.
+
+    ```
+    // index.d.ts
+    export declare const greet: (text: string) => void;
+    ```
+
+    ```
+    // index.ts
+    export const greet = (text) => {
+        console.log(`Hello, ${text}!`)
+    }
+    ```
+
+-   자동으로 생성된 .d.ts 파일은 프로젝트에서 사용자가 사용할 타입 정의를 생성하는 가장 좋은 방법
+-   일반적으로 .js 파일을 생성하는 타입스크립트도 작성된 대부분의 패키지도 해당 파일과 함께 .d.ts를 번들로 묶는 것이 좋다.
+-   13장 '구성 옵션'에서 자세히
+
 <br>
 
 ### 11.5.2 패키지 타입 의존성
 
+-   타입스크립트는 프로젝트의 node_modules 의존성 dependency 내부에서 번들로 제공되는 .d.ts 파일을 감지하고 활용할 수 있다 .
+-   이러한 파일은 해당 패키지에서 내보낸 타입 형태에 대해 마치 동일한 프로젝트에서 작성되었거나 선언 모듈 블록으로 선언된 것처럼 타입 시스템에 알린다.
+-   자체 .d.ts 선언 파일과 함께 제공되는 npm 모듈은 대부분 다음과 같은 파일 구조를 갖는다.
+    ```
+    lib/
+        index.js
+        index.d.ts
+    package.json
+    ```
+-   예, 테스트 프레임워크 Jest는 타입스크립트로 작성되었으면 jest 패키지 내에 자체 번들 .d.ts 파일을 제공한다.
+
+    -   describe, it과 같은 함수를 제공하는 @jest/globals 패키지에 대한 의존성을 가지면 jest 전역으로 사용할 수 있다.
+
+    ```
+    // using-globals.d.ts
+    describe("MyAPI", () => {
+        it("works", () => { /* ... */ });
+    });
+
+    ```
+
+    ```
+    // using-imported.d.ts
+    import { describe, it } from "@jest/globals";
+    describe("MyAPI", () => {
+        it("works", () => { /* ... */ });
+    });
+    ```
+
+-   jest 패키지의 매우 제한적인 하위 구성을 처음부터 다시 만들면 다음 파일과 유사하다.
+-   @jest/globals 패키지는 describe와 it을 내보낸다.
+-   그런 다음 jest 패키지는 해당 함수를 가져오고, 해당 함수 타입의 describe와 it 변수를 가지고 전역 스코프로 확장한다.
+
+    ```
+    // node_modules/@jest/globals/index.d.ts
+    export function describe(name: string, test: () => void): void;
+    export function it(name: string, test: () => void): void
+    ```
+
+    ```
+    // node_modules/jest/index.d.ts
+    import * as globals from "@jest/globals"
+
+    declare global {
+        const describe: typeof globals.describe;
+        const it: typeof globals.it;
+    }
+    ```
+
+    -   이 구조는 제스트를 사용하는 프로젝트가 describe와 itd의 전역 버전을 참조할 수 있도록 허용한다.
+    -   프로젝트 대안으로 @jest/globals 패키지에서 해당 함수를 가져오도록 선택할 수 있다.
+
 <br>
 
 ### 11.5.3 패키지 타입 노출
+
+-   <ins>프로젝트가 npm에 배포되고 사용자를 위한 타입을 제공하면서 패키지의 package.json 파일에 types 필드를 추가해 루트 선언 파일을 가리킨다.</ins>
+-   types 필드는 main 필드와 유사하게 작동하고 종종 동일한 것처럼 보이지만 .js 확장자 대신에 .d.ts 확장자를 사용한다.
+-   예, <ins>다음 가상의 패키지 파일에서 main 런타임 파일인 ./lib/index.js는 types 파일인 ./lib/index.d.ts와 병렬 처리된다.</ins>
+    ```
+    {
+        "author": "Pendant Publishing",
+        "main": "./lib/index.js",
+        "name": "./coffetable",
+        "types": "./lib/index.d.ts",
+        "version": "0.5.22",
+    }
+    ```
+-   그런 다음 타입스크립트는 유틸리티 패키지에서 가져온 파일을 사용하기 위해 제공해야 하는 것으로 ./lib/index.d.ts의 내용을 사용한다.
+-   [NOTE] types 필드가 패키지의 package.json에 존재하지 않으면 타입스크립트는 ./index.d.ts를 기본값으로 가정한다.
+-   대부분의 패키지는 타입스크립트의 선언 컴파일러 옵션을 사용해 소스 파일로부터 .js 파일과 함께 .d.ts 파일을 생성한다.
 
 <br>
 
