@@ -83,7 +83,7 @@
 -   타입스크립트는 이름에 대한 모든 참조를 업데이트하는 이름 바꾸기를 수행할 수 있다.
 -   메뉴의 [Reanme Symbol]\(<kbd>F2</kbd>)
     -   해당 함수와 해당 함수를 호출하는 모든 곳의 이름을 바꿀 수 있는 텍스트 상자가 제공된다.
-    -   미리 확인 <kbd>Shift</kbd> + <kdb>Enter</kbd>
+    -   미리 확인 <kbd>Shift</kbd> + <kbd>Enter</kbd>
 
 <br>
 
