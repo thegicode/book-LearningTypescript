@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function get(container, key) {
     return container[key];
 }
-var roles = {
+const roles = {
     favorite: "fargo",
     others: ["Alomist Famous", "Burn after Reading", "Nomadland"],
 };
-var favorite = get(roles, "favorite"); // type: string
-var others = get(roles, "others"); // type: string[]
-var missing = get(roles, "extras");
+const favorite = get(roles, "favorite"); // type: string
+const others = get(roles, "others"); // type: string[]
+const missing = get(roles, "extras");

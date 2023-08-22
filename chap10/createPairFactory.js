@@ -1,21 +1,25 @@
-var CreatePairFacotory = /** @class */ (function () {
-    function CreatePairFacotory(key) {
+"use strict";
+class CreatePairFacotory {
+    key;
+    constructor(key) {
         this.key = key;
     }
-    CreatePairFacotory.prototype.createPair = function (value) {
+    createPair(value) {
         return {
             key: this.key,
-            value: value,
+            value,
         };
-    };
-    return CreatePairFacotory;
-}());
-var facotry = new CreatePairFacotory("role");
+    }
+}
+const facotry = new CreatePairFacotory("role");
 // type: CreatePairFacotory<stirng>
 console.log("facotry: ", facotry);
-var numberPair = facotry.createPair(10);
+// Log: CreatePairFacotory { key: 'role' }
+const numberPair = facotry.createPair(10);
 // type: { key: string, value: number}
 console.log("numberPair: ", numberPair);
-var stringPair = facotry.createPair("Sophine");
+// Log: { key: 'role', value: 10 }
+const stringPair = facotry.createPair("Sophine");
 // type: { key: string, value: string }
 console.log("stringPair: ", stringPair);
+// Log: { key: 'role', value: 'Sophine' }

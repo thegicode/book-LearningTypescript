@@ -1,3 +1,4 @@
+"use strict";
 function logInput(input) {
     console.log("Hi!", input);
 }

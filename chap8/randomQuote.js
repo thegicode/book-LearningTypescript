@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class RandomQuote {
+    explicit = "Home is the nicest word there is";
+    implicit = "Home is the nicest word there is";
     constructor() {
-        this.explicit = "Home is the nicest word there is";
-        this.implicit = "Home is the nicest word there is";
         if (Math.random() > 0.5) {
             this.explicit = "We start learnig the minute we're born";
             this.implicit = "We start learnig the minute we're born";

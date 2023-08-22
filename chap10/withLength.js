@@ -1,5 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function logWithLength(input) {
-    console.log("Length: ".concat(input.length));
+    console.log(`Length: ${input.length}`);
     return input;
 }
 logWithLength("No one can figure out your worth but you."); // type: string

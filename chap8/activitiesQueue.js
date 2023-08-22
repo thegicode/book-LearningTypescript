@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class ActivitiesQueue {
+    pending; // Ok
     initialize(pending) {
         this.pending = pending;
     }

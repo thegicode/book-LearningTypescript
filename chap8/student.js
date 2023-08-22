@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Student {
+    name;
     constructor(name) {
         this.name = name;
     }
@@ -13,6 +14,7 @@ class Student {
 class Slacker {
 }
 class Student2 {
+    name;
     // Error : 'name' 멤버에는 암시적으로 'any' 형식이 포함됩니다.
     study(hours) {
         // Error : 'hours' 매개 변수에는 암시적으로 'any' 형식이 포함됩니다.

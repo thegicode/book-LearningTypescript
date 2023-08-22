@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class FieldTrip {
+    destination;
     constructor(destination) {
         this.destination = destination;
         console.log(`we're goging to ${this.destination}`);

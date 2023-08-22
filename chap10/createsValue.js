@@ -1,4 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // type: (input: string) => number
-var creater;
-creater = function (text) { return text.length; }; // Ok
-creater = function (text) { return text.toUpperCase(); };
+let creater;
+creater = (text) => text.length; // Ok
+creater = (text) => text.toUpperCase();

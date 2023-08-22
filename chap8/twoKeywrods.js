@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class TwoKeywords {
+    name;
     constructor() {
         this.name = "Anne Sulivan";
     }

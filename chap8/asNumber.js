@@ -1,11 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class AsNumber {
-    constructor() {
-        this.age = 0;
-        // Error:  Property 'age' in type 'AsNumber' is not assignable to the same property in base type 'AgeIsNotANumber'.
-        //   Type 'number' is not assignable to type '() => string'.
-    }
+    age = 0;
 }
 class NotAsNumber {
     age() {

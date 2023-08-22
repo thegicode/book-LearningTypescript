@@ -1,10 +1,9 @@
 "use strict";
 class PastGrades {
-    constructor() {
-        this.grades = [];
-    }
+    grades = [];
 }
 class LabeledPastGrades extends PastGrades {
+    label;
 }
 let subClass;
 subClass = new LabeledPastGrades(); // Ok

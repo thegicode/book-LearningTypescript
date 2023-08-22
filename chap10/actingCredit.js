@@ -1,15 +1,16 @@
-var MoviePart = /** @class */ (function () {
-    function MoviePart(role, speaking) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class MoviePart {
+    role;
+    speaking;
+    constructor(role, speaking) {
         this.role = role;
         this.speaking = speaking;
     }
-    return MoviePart;
-}());
-var part = new MoviePart("Miranda Priestly", true);
-var a = part.role; // type: string
+}
+const part = new MoviePart("Miranda Priestly", true);
+const a = part.role; // type: string
 console.log(a); // Log:  Miranda Priestly
-var IncorrectExtension = /** @class */ (function () {
-    function IncorrectExtension() {
-    }
-    return IncorrectExtension;
-}());
+class IncorrectExtension {
+    role;
+}
