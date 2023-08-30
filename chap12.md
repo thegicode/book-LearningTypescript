@@ -19,20 +19,20 @@
 -   타입스크립트는 타입 정의 또는 값에 대한 참조에서 시작해 코드의 원래 위치로 다시 이동할 수 있다.
 -   VS Code는 이러한 방식으로 역추적하는 몇 가지 방법을 제공한다.
     -   [Go to Definition]\(<kbd>F12</kbd>) : 요청된 이름이 원래 정의된 위치로 즉시 이동
-    -   <kbd>Cmd</kbd>\(맥) / <kbd>Ctrl</kbd>\(윈도우) + 이름 : 정의된 곳으로 이동
-    -   [Peek] > [Peek Definition](<kbd>Option</kbd> (맥) / <kbd>alt</kbd>(윈도우) + <kbd>F12</kbd>) : 정의를 보여주는 Peek 상자를 불러온다.
+    -   <ins><kbd>Cmd</kbd>\(맥)/ <kbd>Ctrl</kbd>\(윈도우) + 이름</ins> : 정의된 곳으로 이동
+    -   <ins>[Peek] > [Peek Definition](<kbd>Option</kbd> (맥) / <kbd>alt</kbd>(윈도우) + <kbd>F12</kbd>)</ins> : 정의를 보여주는 Peek 상자를 불러온다.
 
 <br>
 
 ### 12.1.2 참조 찾기
 
--   [Go to Refrence]\( <kbd>Shift</kbd> + <kbd>F12</kbd>)를
+-   <ins>[Go to Refrence]\( <kbd>Shift</kbd> + <kbd>F12</kbd>)</ins>를
     -   확장 가능한 Peek 상자가 나타나고, 해당 타입 정의 또는 값의 참조 목록을 보여준다.
     -   Peek 상자에서 참조 파일을 직접 볼 수 있다.
     -   해당 파일을 입력, 편집기 실행 명령 실행 등 마치 정기적으로 여는 파일처럼 사용할 수 있다.
     -   오른쪽 있는 파일 이름 목록을 클릭하면 Peek 상자의 파일 뷰가 클릭한 파일로 전환된다.
     -   더블클릭하여 해당 파일이 열리고 일치하는 참조가 선택된다.
--   [Find All Reference]\(<kbd>Option</kbd>(맥) / <kbd>Alt</kbd>(윈도우) + <kbd>Shift</kbd> + <kbd>F12</kbd>)
+-   <ins>[Find All Reference]\(<kbd>Option</kbd>(맥) / <kbd>Alt</kbd>(윈도우) + <kbd>Shift</kbd> + <kbd>F12</kbd>)</ins>
     -   전체 참조 목록을 사이드바에서 확인
     -   한번에 둘 이상의 참조를 열거나 수행하는 데 유용
 
