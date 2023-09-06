@@ -1,5 +1,9 @@
 # Learning Typescript
 
+## TODO
+
+-   책 두번째 보면서 연습문제 풀어볼 것
+
 책 : 러닝 타입스크립트
 <br>
 https://search.shopping.naver.com/book/catalog/36801572634?cat_id=50010881&frm=PBOKPRO&query=%EB%9F%AC%EB%8B%9D+%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8&NaPm=ct%3Dll8w1wiw%7Cci%3Dd1054a58467b99f9c7c1c1b3808bfabb00d4ee81%7Ctr%3Dboknx%7Csn%3D95694%7Chk%3Dae4381c8dfb6c75c86690806f22191803073f86d
