@@ -74,14 +74,14 @@
 ### 12.2.3 코드 액션
 
 -   타입스크립트의 많은 IDE 유틸리티는 직접 실행할 수 있는 액션 action으로 제공된다.
--   [TIP] 코드 액션 메뉴를 여는 VS Code의 기본 단축키는 맥에서 <kbd>Cmd</kbd> + <kbd>.</kbd>이고 리눅스나 윈도우에서는 <kbd>Ctrl</kbd> + <kbd>.</kbd>이다.
+-   [TIP] <ins>코드 액션 메뉴를 여는 VS Code의 기본 단축키는 맥에서 <kbd>Cmd</kbd> + <kbd>.</kbd>이고 리눅스나 윈도우에서는 <kbd>Ctrl</kbd> + <kbd>.</kbd>이다.</ins>
 
 <br>
 
 #### **이름 바꾸기**
 
 -   타입스크립트는 이름에 대한 모든 참조를 업데이트하는 이름 바꾸기를 수행할 수 있다.
--   메뉴의 [Reanme Symbol]\(<kbd>F2</kbd>)
+-   메뉴의 [Reanme Symbol]\(<ins><kbd>F2</kbd></ins>)
     -   해당 함수와 해당 함수를 호출하는 모든 곳의 이름을 바꿀 수 있는 텍스트 상자가 제공된다.
     -   미리 확인 <kbd>Shift</kbd> + <kbd>Enter</kbd>
 
