@@ -1,12 +1,16 @@
 "use strict";
+var _Base_truePrivate;
 Object.defineProperty(exports, "__esModule", { value: true });
 class Base {
-    isPublicImpicit;
-    isPublicExplicit = 1;
-    isProtected = 2;
-    isPrivate = 3;
-    #truePrivate = 4;
+    constructor() {
+        this.isPublicExplicit = 1;
+        this.isProtected = 2;
+        this.isPrivate = 3;
+        _Base_truePrivate.set(this, 4);
+        // Error: Private identifiers are only available when targeting ECMAScript 2015 and higher.
+    }
 }
+_Base_truePrivate = new WeakMap();
 class SubClass extends Base {
     examples() {
         this.isPublicImpicit; // Ok
@@ -14,7 +18,7 @@ class SubClass extends Base {
         this.isProtected; // Ok
         this.isPrivate;
         // Error: Property 'isPrivate' is private and only accessible within class 'Base'.
-        this.#truePrivate;
+        this.;
         // Error: Property '#truePrivate' is not accessible outside class 'Base' because it has a private identifier.
     }
 }

@@ -1,6 +1,8 @@
 "use strict";
 class WithPropertyParameters {
-    tackesParameters = (input) => (input ? "yes" : "No");
+    constructor() {
+        this.tackesParameters = (input) => (input ? "yes" : "No");
+    }
 }
 const instance = new WithPropertyParameters();
 instance.tackesParameters(true); // Ok

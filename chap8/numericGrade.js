@@ -1,10 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class NumericGrade {
-    value = 0;
+    constructor() {
+        this.value = 0;
+    }
 }
 class ValueGrade extends NumericGrade {
-    value = Math.random() > 0.5 ? 1 : "...";
+    constructor() {
+        super(...arguments);
+        this.value = Math.random() > 0.5 ? 1 : "...";
+        //  Error: Property 'value' in type 'ValueGrade' is not assignable to the same property in base type 'NumericGrade'.
+        //   Type 'string | number' is not assignable to type 'number'.
+        //   Type 'string' is not assignable to type 'number'.
+    }
 }
 const instance = new ValueGrade();
 // 에상 타입:  number

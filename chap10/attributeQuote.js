@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const quote_1 = __importDefault(require("./quote"));
 class AttributeQuote extends quote_1.default {
-    speaker;
     constructor(value, speaker) {
         super(value);
         this.speaker = speaker;

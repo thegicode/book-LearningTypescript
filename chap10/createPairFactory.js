@@ -1,6 +1,5 @@
 "use strict";
 class CreatePairFacotory {
-    key;
     constructor(key) {
         this.key = key;
     }

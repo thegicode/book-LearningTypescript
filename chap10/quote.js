@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Quote {
-    lines;
     constructor(lines) {
         this.lines = lines;
     }

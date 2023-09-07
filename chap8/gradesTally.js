@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class GradesTally {
-    grades = [];
+    constructor() {
+        this.grades = [];
+    }
     addGrades(...grades) {
         this.grades.push(...grades);
         return this.grades.length;

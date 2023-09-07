@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class GradeAnnouncer {
-    message;
     constructor(grade) {
         this.message = grade >= 65 ? "Maybe next time..." : "You pass!";
     }

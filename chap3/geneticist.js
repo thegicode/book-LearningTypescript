@@ -6,4 +6,4 @@ if (geneticist) {
 geneticist.toUpperCase();
 // Error: 'geneticist'은(는) 'undefined'일 수 있습니다.
 geneticist && geneticist.toUpperCase(); // Ok : string | undefined
-geneticist?.toUpperCase(); // Ok : string | undefined
+geneticist === null || geneticist === void 0 ? void 0 : geneticist.toUpperCase(); // Ok : string | undefined

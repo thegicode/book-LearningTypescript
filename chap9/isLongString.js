@@ -10,7 +10,7 @@ function workWithText(text) {
     }
     else {
         // text: undefined 타입
-        console.log("Short text", text?.length);
+        console.log("Short text", text === null || text === void 0 ? void 0 : text.length);
         // Error: Property 'length' does not exist on type 'never'.
     }
 }
