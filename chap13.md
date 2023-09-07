@@ -33,7 +33,7 @@
 
 <br>
 
-## 31.2 TSConfig 파일
+## 13.2 TSConfig 파일
 
 -   tsconfig.json의 존재는 해당 디렉터리가 타입스크립트 프로젝트의 루트임을 나타낸다.
     -   디렉터리에서 tsc를 실행하면 tsconfig.jspn 파일의 모든 구성 옵션을 읽는다.
@@ -193,15 +193,74 @@
 
 <br>
 
-## 31.5 자바스크립트로 내보내기
+## 13.5 자바스크립트로 내보내기
+
+-   바벨 같은 전용 컴파일러 도구의 등장으로 일부 프로젝트에서는 타입스크립트의 역할이 타입 검사만으로 축소되었지만,
+-   타입스크립트 구문을 자바스크립트로 컴파일하기 위해 여전히 타입 스크립트에 의존하고 있는 프로젝트도 많다.
+-   프로젝트가 타입스크립트에 단일 의존성을 갖고, tsc 명령을 사용해 자바스크립트를 출력하는 작업은 매우 유용하다.
 
 <br>
 
 ### 13.5.1 outDir
 
+-   기본적으로 타입스크립트는 출력 파일을 해당 소스 파일과 동일한 위치에 생성한다.
+-   outDir 옵션 사용하면
+    -   출력 파일의 루트 디렉터리를 다르게 지정할 수 있다.
+    -   출력 파일은 입력 파일과 동일한 디렉토리 구조를 유지한다.
+-   tsc --outDir dist
+-   모든 입력 파일을 src/ 디렉터리에 넣고 --outDir lib로 컴파일하면 lib/src/fruits/apple.js 대신 lib/fruis/apple.js가 생성된다.
+
 <br>
 
 ### 13.5.2 target
+
+-   자바스크립트 코드 구문을 지원하기 위해 어느 버전까지 변환해야 하는지를 지정하는 옵션
+-   target을 지정하지 않으면 "es3"
+-   tsc --init은 기본적은 "es2016"을 지정
+-   오래된 환경에서 최신 자바스크립트 기능을 지원하려면 더 많은 자바스크립트 코드를 생성해야 하므로, 파일 크기가 조금 더 커지고 런타임 성능이 조금 저하된다.
+-   가능한 한 최신 자바스크립트 구문을 사용하는 것이 좋다.
+-   [TIP] 집필시점 대체적으로 "es2019" 사용
+
+    [defaultNameAndLog](./chap13/defaultNameAndLog.ts)
+
+    ES2015의 const와 ES2020의 nullish 병합 연산자인 ??를 포함한다.
+
+    ```
+    function defaultNameAndLog(nameMaybe: string | undefined) {
+        const name = nameMaybe ?? "anonymouse";
+        console.log("Form", nameMaybe, "to", name);
+        return name;
+    }
+    ```
+
+    tsc --target es2020 이상을 사용하면 const와 ??는 지원되는 구문 기능이므로 타입스크립트는 코드에서 : string | undefiend만 제거하면 된다.
+
+    ```
+    function defaultNameAndLog(nameMaybe) {
+        const name = nameMaybe ?? "anonymouse";
+        console.log("Form", nameMaybe, "to", name);
+        return name;
+    }
+    ```
+
+    tsc --target es2015에서 2019를 사용하면 ?? 구문은 다음 코드로 컴파일된다.
+
+    ```
+    function defaultNameAndLog(nameMaybe) {
+        const name = nameMaybe !== null && nameMaybe !== void 0 ? nameMaybe : "anonymouse";
+        console.log("Form", nameMaybe, "to", name);
+    }
+    ```
+
+    tsc --target es3 또는 es5를 사용하면, const는 추가적으로 const에 상응하는 var로 변환해야 한다.
+
+    ```
+    function defaultNameAndLog(nameMaybe) {
+        var name = nameMaybe !== null && nameMaybe !== void 0 ? nameMaybe : "anonymouse";
+        console.log("Form", nameMaybe, "to", name);
+        return name;
+    }
+    ```
 
 <br>
 
@@ -221,7 +280,7 @@
 
 <br>
 
-## 31.6 타입 검사
+## 13.6 타입 검사
 
 <br>
 
@@ -241,7 +300,7 @@
 
 <br>
 
-## 31.7 모듈
+## 13.7 모듈
 
 <br>
 
@@ -265,7 +324,7 @@
 
 <br>
 
-## 31.8 자바스크립트
+## 13.8 자바스크립트
 
 <br>
 
@@ -285,7 +344,7 @@
 
 <br>
 
-## 31.9 구성 확장
+## 13.9 구성 확장
 
 <br>
 
@@ -321,7 +380,7 @@
 
 <br>
 
-## 31.11 마치며
+## 13.11 마치며
 
 ```
 
