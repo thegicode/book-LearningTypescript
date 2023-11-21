@@ -266,6 +266,48 @@
 
 ### 13.5.3 내보내기 선언
 
+-   대부분의 패키지는 타입스크립트의 delcaration 컴파일러 옵션을 사용해 소스 파일에서 .d.ts 출력 파일을 내보낸다.
+    ```
+    tsc --declaration
+    ```
+    ```
+    "compilerOptions": {
+        "declaration": true
+    }
+    ```
+-   .d.ts 출력 파일은 outDir 옵션에 따라 .js 파일과 동일한 출력 규칙에 따라 내보내진다.
+
+    ```
+    fruits/
+        apple.d.ts
+        apple.js
+        apple.ts
+    vegetables/
+        zucchini.d.ts
+        zucchini.js
+        zucchini.ts
+    ```
+
+#### **emitDeclarationOnly**
+
+-   .js와 .jsx 파일 없이 선언 파일만 내보내도록 지시
+-   외부 도구를 사용해 출력 자바스크립트를 사용하지만 여전히 타입스크립트를 사용해 출력 선언 파일을 생성하려는 프로젝트에 유용
+    ```
+    "compilerOptions": {
+        "emitDeclarationOnly": true
+    }
+    ```
+-   emitDeclarationOnly가 활성화된 경우 delaration 또는 composite 컴파일러 옵션을 활성화해야 한다.
+    -   예) fruits, vegetables 가 있는 디렉터리에서 tsc --declaration --emitDeclarationOnly를 실행하면 출력 .js 없이 fruits/apple.d.ts와 vegetables/zucchini.d.ts 출력 선언 파일이 생성된다.
+    ```
+    fruits/
+        apple.d.ts
+        apple.ts
+    vegetables/
+        zucchini.d.ts
+        zucchini.ts
+    ```
+
 <br>
 
 ### 13.5.4 소스 맵
