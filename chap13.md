@@ -207,17 +207,17 @@
 -   outDir 옵션 사용하면
     -   출력 파일의 루트 디렉터리를 다르게 지정할 수 있다.
     -   출력 파일은 입력 파일과 동일한 디렉토리 구조를 유지한다.
--   tsc --outDir dist
+-   <ins>tsc --outDir dist</ins>
 -   모든 입력 파일을 src/ 디렉터리에 넣고 --outDir lib로 컴파일하면 lib/src/fruits/apple.js 대신 lib/fruis/apple.js가 생성된다.
 
 <br>
 
 ### 13.5.2 target
 
--   자바스크립트 코드 구문을 지원하기 위해 어느 버전까지 변환해야 하는지를 지정하는 옵션
+-   자바스크립트 코드 구문을 지원하기 위해 <ins>어느 버전까지 변환해야 하는지를 지정하는 옵션</ins>
 -   target을 지정하지 않으면 "es3"
 -   tsc --init은 기본적은 "es2016"을 지정
--   오래된 환경에서 최신 자바스크립트 기능을 지원하려면 더 많은 자바스크립트 코드를 생성해야 하므로, 파일 크기가 조금 더 커지고 런타임 성능이 조금 저하된다.
+-   <ins>오래된 환경에서 최신 자바스크립트 기능을 지원하려면 더 많은 자바스크립트 코드를 생성해야 하므로, 파일 크기가 조금 더 커지고 런타임 성능이 조금 저하된다.</ins>
 -   가능한 한 최신 자바스크립트 구문을 사용하는 것이 좋다.
 -   [TIP] 집필시점 대체적으로 "es2019" 사용
 
@@ -310,11 +310,52 @@
 
 <br>
 
-### 13.5.4 소스 맵
+### 13.5.4 소스 맵 source map
+
+#### **source Map**
+
+-   .js 또는 .jsx 출력 파일과 함께 .js.map 또는 .jsx.map 소스 맵을 출력할 수 있다.
+
+    ```
+    tsc --sourceMap
+
+    fruits/
+        apple.js
+        apple.js.map
+        apple.ts
+    vegetables/
+        zuchini.js
+        zuchini.js.map
+        zuchini.ts
+
+    ```
+
+#### **declarationMap**
+
+-   .d.ts 선언 파일에 대한 소스맵을 생성할 수 있다.
+
+    ```
+    tsc --declaration --delclarationMap
+
+    fruits/
+        apple.d.ts
+        apple.d.ts.map
+        apple.js
+        apple.ts
+    vegetables/
+        zucchini.d.ts
+        zucchini.d.ts.map
+        zucchini.js
+        zucchini.ts
+    ```
 
 <br>
 
 ### 13.5.5 noEmit
+
+-   타입스크립트 파일 생성을 건너뛴다.
+-   타입스크립트가 온전히 타입 검사기로만 작동
+-   tsc --noEmit 실행하면 어떠한 파일도 생성되지 않는다. 구문 또는 타입 오류만을 보고한다.
 
 <br>
 
@@ -324,17 +365,255 @@
 
 ## 13.6 타입 검사
 
+-   타입스크립트 구성 옵션은 타입 검사기를 제어한다.
+-   구성 옵션을 느슨하게 구성해 오류가 완전히 확실할 때만 타입 검사 오류를 보고하거나
+-   구성 옵션을 엄격하게 구성해 거의 모든 코드를 올바르게 잘 입력하도록 요구할 수 있다.
+
 <br>
 
 ### 13.6.1 lib
 
-<br>
+-   타입스크립트가 런타임 한경에 있다고 가정하는 전역 API는 lib 컴파일러 옵션으로 구성할 수 있다.
+-   브라우저 타입 포함을 나타내는 dom과 target 컴파일러 옵션을 기본값으로 하는 문자열 배열을 사용한다.
+-   lib 설정을 변경하는 유일한 이유는 브라우저에서 실행되지 않는 프로젝트에서 기본으로 포함되니 dom을 제거하기 위함이다.
+
+    ```
+    tsc --lib es2020
+
+    {
+        "compilerOptions": {
+            "lib": ["es2020"]
+        }
+    }
+    ```
+
+-   또는 최신 자바스크립트 API를 지원하기 위해 polyfill을 사용하는 프로젝트에서 dom과 ECMA 스크립트 특정 버전을 포함할 수 있다.
+
+    ```
+    tsc --lib dom, es2021
+
+    {
+        "compilerOptions": {
+            "lib": ["dom", "es2021"]
+        }
+    }
+    ```
+
+-   올바른 런타임 폴리피을 모두 제공하지 않는 상태에서는 lib을 수정하지 않도록 주의한다.
+
+    -   ES2020까지만 지원하는 플랫폼에서 실행되는 lib이 "es2021"로 설정된 프로젝트에서는 타입 검사 오류가 없을 수 있지만
+    -   String.replaceAll과 같이 ES2021 이상에 정의된 API를 사용하려고 하면 여전히 런타임 오류가 발생할 수 있다.
+
+    ```
+    const value = "a b c";
+    value.replaceAll(" ", ", ")
+    // Uncauht TypeError: value.replaceAll is not function
+
+    ```
+
+-   [TIP] <ins>lib 컴파일러 옵션은 내장된 언어 API를 나타내는 데 사용하고 target 컴파일러 옵션은 존재하는 구문 기능을 나타내는데 사용한다고 생각하라. </ins>
+
+    <br>
 
 ### 13.6.2 skipLibCheck
 
+-   <ins>명시적으로 포함되지 않은 선언 파일에서 타입 검사를 건너뛴다.</ins>
+-   공유된 라이브러리의 정의가 서로 다르고 충돌할 수 있는 패키지 의존성을 많이 사용하는 애플리케이션에 유용
+
+    ```
+    tsc --skipLibCheck
+
+    {
+        "compilerOptions": {
+            "skipLibCheck": true
+        }
+    }
+    ```
+
+-   타입 검사 일부를 건너띄는 작업으로 타입스크립트 성능을 개선한다. 따라서 대부분의 프로젝트에서 skipLibCheck 옵션을 활성화하는 것이 좋다.
+
 <br>
 
-### 13.6.3 엄격 모드
+### 13.6.3 엄격 모드 strict mode
+
+-   기본은 false, 활성화되면 타입 검사기에 일부 추가적인 검사를 켜도록 지시한다.
+-   엄격 옵션 중에 noImplicitAny와 stringNullChecks는 타입 안전 코드를 적용하는 데 특히 유용하고 영향력이 있다.
+
+    ```
+    tsc --strict
+
+    {
+        "compilerOptions": {
+            "strict": true
+        }
+    }
+    ```
+
+-   특정 검사를 제외한 모든 엄격 모드 검사를 활성화하고 싶다면 strict를 활성화하고 특정 검사를 명시적으로 비활성화할 수 있다.
+
+    -   noImplicitAny를 제외한 모든 엄격 모드를 활성화
+
+    ```
+    tsc --strict --noImplicitAny false
+
+    {
+        "compilerOptions": {
+            "noImplicitAny": false,
+            "strict": true
+        }
+    }
+    ```
+
+#### **noImplicitAny**
+
+-   타입스크립트가 매개변수 또는 속성의 타입을 유추할 수 없는 경우라면 any 타입으로 가정한다. any 타입은 타입스크립트의 타입 검사를 대부분 우회할 수 있으므로 코드에 이러한 암시적 타입을 허용하지 않는 것이 좋다.
+-   <ins>noImplicitAny 컴파일러 옵션은 암시적 any로 대체될 때 타입스크립트에 타입 검사 오류가 발생하도록 지시</ins>
+
+    ```
+    const logMessage = (message) =. {
+        // Error: Parameter 'message' implicitly has 'any' type.
+        console.log(`Message: ${message}`);
+    }
+
+    // 타입 애너테이션 추가
+    const logMessage = (message: string) =. {
+        // Error: Parameter 'message' implicitly has 'any' type.
+        console.log(`Message: ${message}`);
+    }
+    ```
+
+-   함수 매개변수의 경우, 함수의 타입을 나타내는 위치페 부모 함수를 배치한다.
+
+    ```
+    type LogMessage = (message: string) => void;
+
+    const logMessage: LogMessage = (message) => {
+        console.log(`Message: ${message}`);
+    }
+    ```
+
+-   [TIP] noImplicitAny는 프로젝트 전체에서 타입 안정성을 보장하는 훌륭한 플래그이다. 완전히 타입스크립트로만 작성된 프로젝트에서는 이 기능을 사용하는 것이 매우 좋다. 그러나 프로젝트가 여전히 자바스크립트에서 타입스크립트로 전환 중인 경우라면 먼저 모든 파일을 타입스크립트로 변환하는 것이 더 쉬울 수 있다.
+
+<br>
+
+#### **strictBindCallApply**
+
+-   타입스크립트가 처음 출시되었을 때 내장된 Function.apply, Function.bind, Function.call 함수 유틸리트를 나타낼 수 있을 만큼 충분한 타입 시스템 기능이 없었다.
+
+    ```
+    function getLegnth(text: string, trim?: boolean) {
+        return trim ? text.trim().length : text.length;
+    }
+
+    // 함수 타입: (thisArg: Function, argArray?: any) => any
+    getLength.apply;
+
+    // 반환 타입: any
+    getLength.bind(undefined, "abc123");
+
+    // 반환 타입: any
+    getLength.call(undefiend, "abc123", true)
+    ```
+
+-   strictBinCallApply를 활성화하면 getLength 함수 변형에 대해 훨씬 더 정확한 타입을 사용할 수 있다.
+
+    ```
+    function getLegnth(text: string, trim?: boolean) {
+        return trim ? text.trim().length : text.length;
+    }
+
+    // 함수 타입:
+    // (thisArg: typeof getLength, args: [text: string, trim?: boolean]) => number
+    getLength.apply;
+
+    // 반환 타입: (trim?: boolean) => number
+    getLength.bind(undefined, "abc123");
+
+    // 반환 타입: number
+    getLength.call(undefiend, "abc123", true)
+    ```
+
+-   타입스크립트의 모범 사례는 strictBindCallApply를 활성
+-   내장된 함수 유틸리티에 대한 개선된 타입 검사는 이를 활용하는 프로젝트의 타입 안정성을 개선하는 데 도움이 된다.
+    <br>
+
+#### **strictFunctionTypes**
+
+-   함수 매개변수 타입을 약간 더 엄격하게 검사한다.
+-   매개변수가 다른 타입의 매개변수 하위 타입인 경우 함수 타입은 더 이상 다른 함수 타입에 할당 가능한 것으로 간주되지 않는다.
+
+        ```
+        function checkOnNumber(containsA: (input: number | string) => boolean) {
+            return containsA(1337);
+        }
+
+        function stringContainsA(input: string) {
+            return !!input.match(/a/i);
+        }
+
+        checkOnNumber(stringContainsA);
+        // Argument of type '(input: string) => boolean' is not assignable to parameter of type '(input: string | number) => boolean'.
+        // Types of parameters 'input' and 'input' are incompatible.
+        // Type 'string | number' is not assignable to type 'string'.
+        // Type 'number' is not assignable to type 'string'.
+
+        npx tsc checkOnNumber --strictFunctionTypes
+        ```
+
+    <br>
+
+#### **strictNullChecks**
+
+-   strictNullChecks 플래그를 비활성화하면 코드의 모든 타입에 null | undefined가 추가되고, 모든 변수가 null 또는 undefined를 받을 수 있도록 허용한다.
+
+    ```
+    let value: string;
+
+        value = "abc123";
+
+        value = null;
+        // npx tsc strictNullChecks --strictNullChecks
+        // error TS2322: Type 'null' is not assignable to type 'string'.
+
+    ```
+
+-   타입스크립트의 모범 사례는 strictNullChecks를 활성화하
+
+<br>
+
+#### **strictPropertyInitialization**
+
+-   타입스키립트의 strictPropertyInitialzation 플래그는 초기화가 없고, 생성자에 확실하게 할당되지 않은 클래스 속성에서 타입 오류를 발생
+-   타입스크립트 모범 사례는 strictPropertyInitialization를 활성화
+-   8장 클래스
+
+<br>
+
+#### **useUnknownInCatchVariables**
+
+-   모든 함수는 사용자가 작성한 throw 문이나 undefined에서 속성을 읽는 것과 같은 극단적인 경우에 오류를 발생시킨다.
+    -   발생한 오류가 Error 클래스의 인스턴스라는 보장은 없다. 코드는 항상 '다른 무언가'를 throw할 수 있다.
+    -   오류는 그 어떤 것도 될 수 있으므로 타입스크립트는 오류의 기본 동작으로 any 타입을 제공한다.
+    -   기본적으로 타입이 안전하지 않은 any에 의존하는 비용으로 오류 처리에 대한 유연성을 허용한다.
+    ```
+    try {
+        someExtrnalFunction();
+    } catch(error) {
+        error; // 기본 타입: any
+    }
+    ```
+-   대부분의 any 사용과 마찬가지로 오류를 억지로 명시적 타입 어서션 또는 내로잉하는 비용보다 unknown으로 처리하는 것이 기술적으로 더 타당하다.
+-   catch 절의 오류는 any 또는 unknown 타입으로 애너테이션을 추가할 수 있다.
+    ```
+    try {
+        someExtrnalFunction();
+    } catch(error: unknown) {
+        error; // 기본 타입: unknown
+    }
+    ```
+-   엄격한 영역 플래그인 useUnknownInCatchVariables는 타입스크립트의 기본 catch 절 error 타입을 unknown으로 변경한다.
+-   useUnknownInCatchVariables을 활성화하면 앞서 살펴본 두 개의 스티펫에서 error 타입은 unknown으로 설정된다.
+-   타입스크립트의 모범 사례는 useUnknownInCatchVariables를 활성화
 
 <br>
 
