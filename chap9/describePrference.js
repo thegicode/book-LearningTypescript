@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function describePrference(preference) {
     switch (preference) {
         case "maybe":
@@ -23,3 +21,4 @@ const preferencesReadonly = {
 };
 describePrference(preferencesReadonly.movie);
 preferencesReadonly.movie = "no";
+export {};

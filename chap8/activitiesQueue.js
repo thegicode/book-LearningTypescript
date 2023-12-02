@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class ActivitiesQueue {
     pending; // Ok
     initialize(pending) {
@@ -12,3 +10,4 @@ class ActivitiesQueue {
 const activities = new ActivitiesQueue();
 activities.initialize(["eat", "sleep", "learn"]);
 activities.next();
+export {};

@@ -37,7 +37,7 @@
 
 -   tsconfig.json의 존재는 해당 디렉터리가 타입스크립트 프로젝트의 루트임을 나타낸다.
     -   디렉터리에서 tsc를 실행하면 tsconfig.jspn 파일의 모든 구성 옵션을 읽는다.
--   tsc 명령에 tsconfig.json 파일이 있는 디렉터리 경로 또는 tsc가 tsconfig.json 대신 사용할 파일 경롤 -p 또는 --project 플래그에 전달한다.
+-   tsc 명령에 tsconfig.json 파일이 있는 디렉터리 경로 또는 tsc가 tsconfig.json 대신 사용할 파일 경로를 -p 또는 --project 플래그에 전달한다.
     ```
     tsc -p path/to/toconfig.json
     ```
@@ -437,7 +437,7 @@
 ### 13.6.3 엄격 모드 strict mode
 
 -   기본은 false, 활성화되면 타입 검사기에 일부 추가적인 검사를 켜도록 지시한다.
--   엄격 옵션 중에 noImplicitAny와 stringNullChecks는 타입 안전 코드를 적용하는 데 특히 유용하고 영향력이 있다.
+-   <ins>엄격 옵션 중에 noImplicitAny와 stringNullChecks는 타입 안전 코드를 적용하는 데 특히 유용하고 영향력이 있다.</ins>
 
     ```
     tsc --strict
@@ -482,7 +482,7 @@
     }
     ```
 
--   함수 매개변수의 경우, 함수의 타입을 나타내는 위치페 부모 함수를 배치한다.
+-   <ins>함수 매개변수의 경우, 함수의 타입을 나타내는 위치에 부모 함수를 배치한다.</ins>
 
     ```
     type LogMessage = (message: string) => void;
@@ -533,13 +533,13 @@
     getLength.call(undefiend, "abc123", true)
     ```
 
--   타입스크립트의 모범 사례는 strictBindCallApply를 활성
+-   <ins>타입스크립트의 모범 사례는 strictBindCallApply를 활성</ins>
 -   내장된 함수 유틸리티에 대한 개선된 타입 검사는 이를 활용하는 프로젝트의 타입 안정성을 개선하는 데 도움이 된다.
     <br>
 
 #### **strictFunctionTypes**
 
--   함수 매개변수 타입을 약간 더 엄격하게 검사한다.
+-   <ins>함수 매개변수 타입을 약간 더 엄격하게 검사한다.</ins>
 -   매개변수가 다른 타입의 매개변수 하위 타입인 경우 함수 타입은 더 이상 다른 함수 타입에 할당 가능한 것으로 간주되지 않는다.
 
         ```
@@ -564,7 +564,7 @@
 
 #### **strictNullChecks**
 
--   strictNullChecks 플래그를 비활성화하면 코드의 모든 타입에 null | undefined가 추가되고, 모든 변수가 null 또는 undefined를 받을 수 있도록 허용한다.
+-   <ins>strictNullChecks 플래그를 비활성화하면 코드의 모든 타입에 null | undefined가 추가되고, 모든 변수가 null 또는 undefined를 받을 수 있도록 허용한다.</ins>
 
     ```
     let value: string;
@@ -583,7 +583,7 @@
 
 #### **strictPropertyInitialization**
 
--   타입스키립트의 strictPropertyInitialzation 플래그는 초기화가 없고, 생성자에 확실하게 할당되지 않은 클래스 속성에서 타입 오류를 발생
+-   <ins>타입스크립트의 strictPropertyInitialzation 플래그는 초기화가 없고, 생성자에 확실하게 할당되지 않은 클래스 속성에서 타입 오류를 발생</ins>
 -   타입스크립트 모범 사례는 strictPropertyInitialization를 활성화
 -   8장 클래스
 
@@ -611,9 +611,9 @@
         error; // 기본 타입: unknown
     }
     ```
--   엄격한 영역 플래그인 useUnknownInCatchVariables는 타입스크립트의 기본 catch 절 error 타입을 unknown으로 변경한다.
+-   <ins>엄격한 영역 플래그인 useUnknownInCatchVariables는 타입스크립트의 기본 catch 절 error 타입을 unknown으로 변경한다.</ins>
 -   useUnknownInCatchVariables을 활성화하면 앞서 살펴본 두 개의 스티펫에서 error 타입은 unknown으로 설정된다.
--   타입스크립트의 모범 사례는 useUnknownInCatchVariables를 활성화
+-   타입스크립트의 모범 사례는 useUnknownInCatchVariablens를 활성화
 
 <br>
 
@@ -627,17 +627,101 @@
 
 ### 13.7.1 module
 
+-   타입스크립트는 어떤 모듈 시스템으로 변환된 코드를 사용할지 결정하기 위해 module 컴팡일러 옵션을 제공한다.
+
+    -   ECMA스크립트 모듈로 소스 코드를 작성할 때 타입스크립트는 module 옵션에 따라 export와 import문을 다른 모듈 시스템으로 변환할 수 있다.
+
+    ```
+    // commonjs로 출력되도록
+    npx --module commonjs
+
+    {
+        "compilerOptions": {
+            "module": "commonjs"
+        }
+    }
+
+    ```
+
+-   <ins>target 컴파일러 옵션이 "es3" 또는 "es5"인 경우 module 컴파일러 옵션의 기본값은 "commonjs"가 된다.</ins>
+-   그렇지 않으면 ECMA스크립트 모듈로 출력하도록 지정하기 위해 "es2015"로 기본 설정
+
 <br>
 
 ### 13.7.2 moduleResolutiion
+
+-   모듈 해석 module resolution은 import에서 가져온 경로가 module에 매핑되는 과정
+-   타입스크립트는 해당 과정에 로직을 지정하는 데 사용할 수 있는 moduleResolution 옵션을 제공한다.
+    -   node : 기존 Node.js와 같은 CommonJS resolver에서 사용하는 동작
+    -   nodenext: ECMA스크립트 모듈에 대해 지정된 동작에 맞게 조정
+-   두 전략은 유사하다. 대부분의 프로젝트는 둘 중 사용할 수 있으며 차이를 느끼지 못한다.
+-   https://www.typescriptlang.org/docs/handbook/modules/theory.html#module-resolution
+    -   모듈 해석 이면에 있는 복잡성에 대해 알아볼 수 있다.
+-   [TIP] moduleResolution은 타입스크립트가 코드를 내보내는 방법을 전혀 변경하지 않는다. 따라서 코드가 실행되는 런타임 환경을 설명하기 위해서만 사용된다.
+
+    ```
+    tsc --moduleResolution nodenext
+
+    {
+        "comilerOptions": {
+            "moduleResolution": "nodenext"
+        }
+    }
+    ```
+
+-   [TIP] 이전 버전과의 호환성을 위해 타입스크립트는 기본 moduleRsolution 값을 수년전의 프로젝트에 사용된 classic 값으로 유지한다.
 
 <br>
 
 ### 13.7.3 CommonJS와의 상호 운용성
 
+-   자바스크립트 모듈로 작업할 때 모듈의 default 내보내기와 namespace 출력 간에는 차이점이 있다.
+
+    -   모듈의 default 내보내기는 내보낸 객체의 **.default 속성**
+    -   namespace 내보내기는 내보낸 **객체 자체**
+
+-   CommonJS와 ECMA스크립트 모듈 내보내기 및 가져오기 방식
+
+| 구문 영역             | CommonJS                                  | ECMA 스크립트                 |
+| --------------------- | ----------------------------------------- | ----------------------------- |
+| 기본 내보내기         | module.exports.default = value;           | export default value          |
+| 기본 가져오기         | const { default: value } = require("...") | imoort value from "..."       |
+| 네임스페이스 내보내기 | module.exports = value;                   | 지원 안 함                    |
+| 네임스페이스 가져오기 | const value = require("...")              | import \* as value from "..." |
+
+-   타입스크립테는 모듈 형식 간의 상호 운용 interoperability을 개선하는 몇 가지 컴파일러 옵션을 제공한다.
+
+<br>
+
+**esModuleInterop**
+
+-   module이 "es2015" 또는 "esnext"와 같은 ECMA스크립트 모듈 형식이 아닌 경우 타입스크립트에서 내보낸 자바스크립트 코드에 소량의 로직을 추가한다.
+    -   해당 로직은 ECMA스크립트 모듈이 기본 또는 네임스페이스 가져오기에 대한 ECMA크스립트 모듈의 규칙을 준수하지 않는 경우에도 모듈에서 가져올 수 있도록 한다.
+-   "react" 같은 패키지 위해
+-   내보낸 자바스크립트 코드가 가져오기로 작동하는 방식에 대해서만 직접 변경한다.
+
+<br>
+
+**allowSyntheticDefaultImports**
+
+-   ECMA스크립트 모듈이 호환되지 않는 CommonJS 네임스페이스 내보내기 파일에서 기본 가져오기를 할 수 있음을 타입 시스템에 알린다.
+-   다음 중 하나가 true인 경우에만 true로 기본적으로 설정된다.
+    -   module이 "system"ㅇㄴ 경우(거의 사용하지 않는 모듈 방식)
+    -   esModuleInterop이 true이고 module이 "es2015" 또는 "esnext"와 같은 ECMA스크립트 모둘 형식이 아닌 경우
+-   esModuleInterop이 true이고 module이 "esnext"인 경우 타입스크립트는 출력 자바스크립트 코드가 가져오기 상호 운용성 지원을 사용하지 않는다고 가정한다.
+
 <br>
 
 ### 13.7.4 isolatedModules
+
+-   한 번에 하나의 파일에서만 작동하는 바벨과 같은 외부 트랜스파일러는 타입 시스템 정보를 사용해 자바스크립트를 내보낼 수 없다.
+-   결과적으로 타입 정보에 의존하며 자바스크립트를 내보내는 타입스크립트 구문 기능은 바벨 같은 트랜스파일러에서는 지원되지 않는다.
+
+    -   14장 '구문 확장'에서 다룰 const 열거형
+    -   스크립트(모듈이 아닌) 파일
+    -   14장 '구문 확장'에서 다룰 독립 실행형 상태 내보내기
+
+-   프로젝트에서 타입스크립트가 아닌 다른 도구를 사용해 자바스크립트로 변화하는 경우에는 isolatedModules를 활성화
 
 <br>
 
@@ -647,17 +731,115 @@
 
 ## 13.8 자바스크립트
 
+-   기본적으로 .js 또는 .jsx 확장자를 가진 파일을 무시하지만, allowJS와 checkJs 컴파일러 옵션을 사용하면 자바스크립트 파일을 읽고, 컴파일하고, 제한된 기능이지만 타입 검사도 할 수 있다.
+
 <br>
 
 ### 13.8.1 allowJs
+
+-   자바스크립트 파일에 선언된 구문을 타입스크립트 파일에서 타입 검사를 하도록 허용한다.
+
+    [values](./chap13/values.js)
+
+    ```
+    // values.js
+    export const value = "We cannot succeed when half of us are held back";
+    ```
+
+    [allowJs](./chap13/allowJs.ts)
+
+    ```
+    // allowJs.ts
+    import { value } from "./values";
+    console.log(value);
+
+    // 모듈 './values'에 대한 선언 파일을 찾을 수 없습니다. '~/values.js'에는 암시적으로 'any' 형식이 포함됩니다.
+
+    ```
+
+-   target에 맞게 컴파일되고 자바스크립트로 내보내진 파일 목록에 자바스크립트 파일을 추가한다.
+
+    -   소스 맵과 선언파일도 생성된다.
+
+    ```
+    tsc ---allowJs
+
+    {
+        "compilerOptions": {
+            "allowJs": true
+        }
+    }
+
+    ```
+
+-   allowJs가 활성화되면 allowJs.ts의 value는 string 타입이 된다.
+
+-   [thegicode] '~/chap10/identity.js' 파일은 입력 파일을 덮어쓰므로 쓸 수 없습니다. outDir를 설정해야 한다.
 
 <br>
 
 ### 13.8.2 checkJs
 
+-   단순히 자바스크립트 파일을 타입 검사
+-   checkJs 컴파일러 옵션은 다음 두 가지 용도로 사용된다.
+
+    -   allowJs 옵션이 아직 true가 아니라면 기본값을 true로 설정하기
+    -   .js와 .jsx 파일에서 타입 검사기 활성화하기
+
+    ```
+    tsc --checkJs
+
+    {
+        "comilerOptions": {
+            "checkJs": true
+        }
+    }
+    ```
+
+-   타입 불일치, 철자가 틀린 변수명 등 타입스크립트 파일에서 일반적으로 발생하는 모든 오류를 발생시킨다.
+    [checkJs](./chap13/checkJs.js)
+
+    ```
+    let myQyote = "soieogoeoeoeo";
+
+    console.log(quote);
+    // 'quote' 이름을 찾을 수 없습니다.
+
+    ```
+
+    -   checkJs가 활성화되지 않았다면 타입스크립트는 해당 버그에 대한 오류를 보고하지 않는다.
+
 <br>
 
+**@ts-check**
+
+-   파일 상단에 // @ts-check 주석을 사용해 파일별로 checkJs를 활성화한다.
+
 ### 13.8.3 jSDoc 지원
+
+-   allowJs와 checkJs가 활성화되면 타입스크립트는 코드의 모든 JSDoc 정의를 인식한다.
+    [jsDoc.js](./chap13/jsDoc.js)
+
+    ```
+    /**
+    *   @param {string} text
+    */
+
+    function sentenceCase(text) {
+    return `${text[0].toUpperCase()} ${text.slice(1)} `;
+    }
+
+    sentenceCase("hello world");
+
+    sentenceCase(["hello"], ["world"]);
+    // 1개의 인수가 필요한데 2개를 가져왔습니다.
+
+    ```
+
+-   jsDoc.js은 string 타입을 받는 sentenceCase 함수에 대한 jsDoc을 선언한다. 그러면 타입스크립트는 해당함수가 string을 반환한다고 유추한다.
+    -   checkJs가 활성화되면 타입스크립트는 string[]을 전달하는 것에 대해서 타입 오류가 보고되어야 한다는 것을 알게 된다.
+-   타입스크립트의 jsDoc 지원은 시간이 충분하지 앟은 프로젝트나 타입스크립트로 변환하는 데 익숙하지 않은 개발자를 위해 타입 검사를 점진적으로 추가하는 데 유용하다.
+-   [jsdoc-supported-types](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#handbook-content)
 
 <br>
 
@@ -702,6 +884,10 @@
 <br>
 
 ## 13.11 마치며
+
+```
+
+```
 
 ```
 

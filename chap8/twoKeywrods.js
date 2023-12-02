@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class TwoKeywords {
     name;
     constructor() {
@@ -11,3 +9,4 @@ class TwoKeywords {
 }
 const two = new TwoKeywords();
 two.name = "Savitribal Phule";
+export {};

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // type: KeyValuePair<string, number>
 let allExpicit = {
     key: "rating",
@@ -15,3 +13,4 @@ let firstMissing = {
     key: "rating",
     value: 10,
 };
+export {};

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function isNumberOrString(value) {
     return ["number", "string"].includes(typeof value);
 }
@@ -13,3 +11,4 @@ function logValueIfExists(value) {
         console.log("Value does not exist", value);
     }
 }
+export {};

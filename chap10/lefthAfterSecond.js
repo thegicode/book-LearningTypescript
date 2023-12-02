@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // type: (text: string) => Promise<number>
 async function lengthAfterSecond(text) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -9,3 +7,4 @@ async function lengthAfterSecond(text) {
 async function lengthImmediately(text) {
     return text.length;
 }
+export {};

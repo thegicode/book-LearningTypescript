@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Assignment {
     grade;
 }
@@ -10,3 +8,4 @@ class GradesAssignment extends Assignment {
         this.grade = grade;
     }
 }
+export {};

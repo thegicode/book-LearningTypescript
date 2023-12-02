@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function isStandupComedian(value) {
     return "routine" in value;
 }
@@ -12,3 +10,4 @@ function workWithComedian(value) {
     console.log(value.routine);
     // Error: Property 'routine' does not exist on type 'Comedian'.
 }
+export {};

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 // Error:  'meter' is declared here.
 // Ok
 const morningGlory = {
@@ -14,3 +12,4 @@ const oneArt = {
     author: "Elizabeth Bishop",
     type: "villanelle",
 };
+export {};

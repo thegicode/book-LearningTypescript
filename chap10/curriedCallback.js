@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CurriedCallback = void 0;
 class CurriedCallback {
     #callback;
     // Error: Private identifiers are only available when targeting ECMAScript 2015 and higher.
@@ -12,7 +9,6 @@ class CurriedCallback {
         };
     }
 }
-exports.CurriedCallback = CurriedCallback;
 new CurriedCallback((input) => {
     console.log(input.length);
 });
@@ -20,3 +16,4 @@ new CurriedCallback((input) => {
     console.log(input.length);
     // Error: Property 'length' does not exist on type 'unknown'.
 });
+export { CurriedCallback };

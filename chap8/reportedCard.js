@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class ReportCard {
     grades;
     constructor(grades) {
@@ -11,3 +9,4 @@ class ReportCard {
 }
 class Empty {
 }
+export {};

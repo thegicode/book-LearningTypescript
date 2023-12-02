@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Question {
     static answer;
     static prompt = "What's an ogre's favorite programing language?";
@@ -14,3 +12,4 @@ class Question {
     }
 }
 Question.answer;
+export {};

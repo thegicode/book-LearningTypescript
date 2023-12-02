@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Teacher {
     teach() {
         console.log("The surest test of discipline is its absenece.");
@@ -14,3 +12,4 @@ const teacher = new StudentTeacher();
 teacher.teach();
 teacher.learn();
 teacher.other();
+export {};

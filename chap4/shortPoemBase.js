@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const oneArt = {
     // Error : Type '{ author: string; type: "villanelle"; }' is not assignable to type 'ShortPoem'.
     //   Type '{ author: string; type: "villanelle"; }' is not assignable to type 'Villanelle'.
@@ -7,3 +5,4 @@ const oneArt = {
     author: "Elizabeth Bishop",
     type: "villanelle",
 };
+export {};

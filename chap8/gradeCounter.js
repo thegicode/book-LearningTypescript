@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class GradeCounter {
     countGrades(grades, letter) {
         return grades.filter((grade) => grade === letter).length;
@@ -21,3 +19,4 @@ class AnyFailureChecker extends GradeCounter {
 const counter = new AnyFailureChecker();
 // 실제 타입 : boolean
 const count = counter.countGrades(["A", "C", "F"]);
+export {};

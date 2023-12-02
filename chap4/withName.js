@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const hasBoth = {
     firstName: "Lucille",
     lastName: "Clifton",
@@ -7,3 +5,4 @@ const hasBoth = {
 let withFirstName = hasBoth;
 // Ok :  'hashBoth'는 'string' 타입의 'firstName'을 포함함
 let withLastName = hasBoth;
+export {};

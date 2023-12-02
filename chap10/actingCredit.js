@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class MoviePart {
     role;
     speaking;
@@ -14,3 +12,4 @@ console.log(a); // Log:  Miranda Priestly
 class IncorrectExtension {
     role;
 }
+export {};

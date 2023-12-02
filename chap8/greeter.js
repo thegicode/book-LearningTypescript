@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Greeter {
     greet(name) {
         console.log(`${name}, do tyour stuff!`);
@@ -7,3 +5,4 @@ class Greeter {
 }
 new Greeter().greet("Miss Frizzle");
 new Greeter().greet();
+export {};

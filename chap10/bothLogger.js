@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class BothLogger {
     instanceLog(value) {
         console.log(value);
@@ -20,3 +18,4 @@ BothLogger.staticLog([false, true]);
 // Log: [ false, true ]
 // 유추된 OnStatic 타입 인수 : string
 BothLogger.staticLog("You can't change the music of your soul.");
+export {};

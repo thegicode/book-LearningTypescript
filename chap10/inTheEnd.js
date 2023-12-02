@@ -1,4 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function inTheEnd() { } // Ok
 function inTheMiddle() { }
+export {};

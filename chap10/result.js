@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function handleResult(result) {
     if (result.successed) {
         // result: SuccessfullResult<string>의 타입
@@ -16,3 +14,4 @@ function handleResult(result) {
     // Error:  Property 'data' does not exist on type 'Result<string>'.
     //   Property 'data' does not exist on type 'FailureResult'.
 }
+export {};

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class RandomQuote {
     explicit = "Home is the nicest word there is";
     implicit = "Home is the nicest word there is";
@@ -14,3 +12,4 @@ class RandomQuote {
 const quote = new RandomQuote();
 console.log(quote.explicit); // 타입: string
 console.log(quote.implicit); // 타입: "Home is the nicest word there is"
+export {};

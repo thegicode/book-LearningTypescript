@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function tellJoke(joke) {
     if (joke.style === "one-liner") {
         console.log(joke.quote);
@@ -20,3 +18,4 @@ const wideObject = {
     style: "one-liner",
 };
 tellJoke(wideObject);
+export {};

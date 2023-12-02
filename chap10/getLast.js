@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function getLast(node) {
     return node.next ? getLast(node.next) : node.value;
 }
@@ -27,3 +25,4 @@ let lastMismatch = getLast({
     // Error: Type 'boolean' is not assignable to type 'number'.
 });
 console.log("lastMismatch: ", lastMismatch);
+export {};

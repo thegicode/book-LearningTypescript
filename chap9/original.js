@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const original = {
     medium: "movie",
     title: "Mean Girls",
@@ -12,3 +10,4 @@ else {
     adaptation = { ...original, medium: 2 };
     // Error: Type 'number' is not assignable to type 'string'.
 }
+export {};

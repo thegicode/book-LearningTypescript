@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Student {
     name;
     constructor(name) {
@@ -20,3 +18,4 @@ class Student2 {
         // Error : 'hours' 매개 변수에는 암시적으로 'any' 형식이 포함됩니다.
     }
 }
+export {};

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class NumericGrade {
     value = 0;
 }
@@ -10,3 +8,4 @@ const instance = new ValueGrade();
 // 에상 타입:  number
 // 실제 타입: number | string
 instance.value;
+export {};

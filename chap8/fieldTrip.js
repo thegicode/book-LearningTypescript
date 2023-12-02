@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class FieldTrip {
     destination;
     constructor(destination) {
@@ -12,3 +10,4 @@ class FieldTrip {
 const trip = new FieldTrip("place");
 trip.destination;
 trip.noneexistent;
+export {};

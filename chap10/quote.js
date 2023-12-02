@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Quote {
     lines;
     constructor(lines) {
@@ -25,4 +23,4 @@ const d = new SpokenQuote([4, 8, 15, 16, 25, 42]);
 // Error: Type 'number' is not assignable to type 'string'.
 console.log(d);
 // Log: SpokenQuote { lines: [ 4, 8, 15, 16, 25, 42 ] }
-exports.default = Quote;
+export default Quote;

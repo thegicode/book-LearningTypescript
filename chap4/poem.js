@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const poem = Math.random() > 0.5
     ? { name: "The Double Image", pages: 7 }
     : { name: "Her Kind", rhymes: true };
@@ -18,3 +16,4 @@ const poem = Math.random() > 0.5
 console.log(poem.name);
 console.log(poem.pages);
 console.log(poem.rhymes);
+export {};

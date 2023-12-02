@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class GradesTally {
     grades = [];
     addGrades(...grades) {
@@ -15,3 +13,4 @@ class ContinueGradesTally extends GradesTally {
         console.log("Starting with length", this.grades.length);
     }
 }
+export {};

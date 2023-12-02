@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class GradeAnnouncer {
     message;
     constructor(grade) {
@@ -14,3 +12,4 @@ class PassingAnnouncer extends GradeAnnouncer {
 class FailingAnnouncer extends GradeAnnouncer {
     constructor() { }
 }
+export {};

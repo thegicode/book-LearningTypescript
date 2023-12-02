@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class School {
     name;
     constructor(name) {
@@ -19,3 +17,4 @@ class Absence extends School {
 let school;
 school = new Preschool("Sunnyside Daycare");
 school = new School("somewhere else");
+export {};

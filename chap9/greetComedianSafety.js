@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function greetComedianSafety(name) {
     if (typeof name === "string") {
         console.log(`Announcing ${name.toUpperCase()}`); // Ok
@@ -11,3 +9,4 @@ function greetComedianSafety(name) {
 greetComedianSafety("Betty White");
 // Logs: Announcing BETTY WHITE
 greetComedianSafety({});
+export {};

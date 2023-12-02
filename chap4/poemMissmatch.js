@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const poemMisttMatch = {
     author: {
         name: "sylvia Plath",
@@ -8,3 +6,4 @@ const poemMisttMatch = {
     },
     name: "Tulips",
 };
+export {};

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function get(container, key) {
     return container[key];
 }
@@ -8,3 +6,4 @@ const roles = {
     others: ["Alomist Famous", "Burn after Reading", "Nomadland"],
 };
 const found = get(roles, "favorite"); // type: string | string[]
+export {};

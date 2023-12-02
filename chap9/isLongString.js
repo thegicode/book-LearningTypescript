@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 function isLongString(input) {
     return !!(input && input.length >= 7);
 }
@@ -14,3 +12,4 @@ function workWithText(text) {
         // Error: Property 'length' does not exist on type 'never'.
     }
 }
+export {};

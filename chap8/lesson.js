@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Lesson {
     subject;
     constructor(subject) {
@@ -19,3 +17,4 @@ lesson = new OnlineLesson("coding", "orelly.com");
 let online;
 online = new OnlineLesson("coding", "orelly.com");
 online = new Lesson("coding");
+export {};

@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class Quote {
     text;
     constructor(text) {
@@ -12,3 +10,4 @@ class Quote {
 }
 const quote = new Quote("There is a brilliant child locked inside every stdent.");
 quote.text = "Hai";
+export {};

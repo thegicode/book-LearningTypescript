@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const seasonCounts = new Map([
     ["I love Lucy", "6"],
     ["The Golden Grils", "7"],
@@ -11,3 +9,4 @@ console.log(maybeValue.toUpperCase());
 // 타입: string
 const knownValue = seasonCounts.get("I love Lucy");
 console.log(knownValue.toUpperCase());
+export {};

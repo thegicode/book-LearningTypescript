@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let myNovella = {
     pages: 195,
     title: "Ethan Frome",
@@ -14,3 +12,4 @@ let extraProperty = {
     strategy: "baseline",
     style: "Naturalism",
 };
+export {};
