@@ -849,13 +849,89 @@
 
 ## 13.9 구성 확장
 
+-   TSConfig 파일이 다른 구성 파일에서 구성 값을 확장하거나 복사하도록 선택하는 매커니즘을 제공한다.
+
 <br>
 
 ### 13.9.1 extends
 
+-   extends 구성 옵션을 통해 다른 TSConfig에서 확장할 수 있다.
+-   예) 여러 개의 packages/\* 디렉터리를 포함하는 monorepo처럼 여러 개의 TSConfig가 있는 많은 저장소는 규칙에 따라 확장할 tsconfig.json 파일에 대한 tsconfig.base.json 파일을 생성한다.
+
+    -   monorepo 모노레포: 여러 개의 프로젝트를 하나의 저장소에서 관리하는 개발 전략
+
+    ```
+    // tsconfig.base.json
+    {
+        "compilerOptions": {
+            "strict": true
+        }
+    }
+
+    // packages/core/tsconfig.json
+    {
+        "extends": "../../tsconfig.base.json",
+        "includes": ["src"]
+    }
+    ```
+
+<br>
+
+**확장 모듈**
+
+-   extends 속성은 다음 자바스크립트 가져오기 중 하나를 사용한다.
+    -   절대absolute 경로: @ 또는 알파벳 문자로 시작
+    -   상대relative 경로: 마침표(.)로 시작하는 로컬 파일 경로
+-   extends 값이 절대 경로라면 npm 모듈에서 TSConfig를 확장함을 나타낸다. 타입스크립트는 이름과 일치하는 패키지를 찾기 위해 일반 노드 모듈 확인 시스템을 사용한다. 해당 패키지의 package.json은 상대 경로 문자열이 있는 "tsconfig" 필드를 포함하고, 해당 경로의 TSConfig 파일이 사용된다. 그렇지 않으면 패키지의 tsconfig.json 파일이 사용된다.
+-   다음 TSConfig 파일은 @my-org 조직의 모노레포에 대해 설정하는 파일이다.
+
+    -   packages/js는 allowJs 컴파일러 옵션을 지정해야 하지만 packages/ts는 어떠한 컴파일러 옵션도 변경하지 않는다.
+
+    ```
+    // packages/tsconfig.json
+    {
+        "compilerOptions": {
+            "strict": true
+        }
+    }
+
+    // packages/js/tsconfig.json
+    {
+        "extends": "@my-org/tsconfig",
+        "compilerOptions": {
+            "allowJs": true
+        },
+        "includes": ["src"]
+    }
+
+    // packages/ts/tsconfig.json
+    {
+        "extends": "@my-org/tsconfig",
+        "includes": ["src"]
+    }
+    ```
+
 <br>
 
 ### 13.9.2 구성 베이스
+
+-   처음부터 고유한 구성을 생성하거나 --init 제안을 하는 대신, 특정 런타임 환경에 맞게 미리 만들어진 베이스 TSConfig 파일로 시작할 수 있다.
+-   미리 만들어진 구성 베이스는 @tsconfig/recommended 또는 @tsconfig/node16과 같은 @tsconfig/ 아래의 npm 패키지 레지스트리에서 사용할 수 있다.
+-   예) 디노에 권장되는 TSConfig 베이스를 설치하려면 다음과 같이 진행한다.
+
+    ```
+    npm install --save-dev @tsconfig/deno
+    # or
+    yarn add --dev @tsconfig/deno
+    ```
+
+-   구성 베이스 패키지가 설치되고 나면 다른 npm 패키지 구성 확장처럼 참조할 수 있다.
+
+    ```
+    "extends": "@tsconfig/deno/tsconfig.json"
+    ```
+
+-   TSConfig 베이스의 전체 목록은 https://github.com/tsconfig/bases 에 문서화되어 있따.
 
 <br>
 
@@ -865,11 +941,21 @@
 
 ## 13.10 프로젝트 레퍼런스
 
+-   타입스크립트에서는 여러 개의 프로젝트를 함께 빌드하는 프로젝트 레퍼런스 project reference 시스템을 정의할 수 있다.
+-   몇 가지 핵심 이점
+    -   특정 코드 영역에 대해 다른 컴파일러 옵션을 지정할 수 있다.
+    -   타입스크립트는 개별 프로젝트에 대한 빌드 출력을 캐시할 수 있으므로 종종 대규모 프로젝트의 빌드 시간이 훨씬 빨라진다.
+    -   프로젝트 레퍼런스는 코드의 개별 영역을 구조화하는 데 유용한 의존성 트리 dependancy tree (특정 프로젝트가 특정 다른 프로젝트에서 파일을 가져오는 것만 허용)를 실행한다.
+-   프로젝트 레퍼런스를 활성화하기 위해 프로젝트 설정을 구축하는 방법
+    -   TSConfig의 composit 모드는 다중 TSConfig 빌드 모드에 적합한 방식으로 작동하도록 강제한다.
+    -   TSConfig의 reference는 TSConfig가 의존하는 복합 TSConfig를 나타낸다.
+    -   빌도 모드는 복합 TSConfig 레퍼런스를 사용해 파일 빌드를 조정한다.
+
 <br>
 
 ### 13.10.1 composite
 
-<br>
+<br>`
 
 ### 13.10.2 references
 
