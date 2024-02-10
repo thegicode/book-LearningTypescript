@@ -1,6 +1,3 @@
-"use strict";
-var _Base_truePrivate;
-Object.defineProperty(exports, "__esModule", { value: true });
 class Base {
     constructor() {
         this.isPublicExplicit = 1;
@@ -27,3 +24,4 @@ new SubClass().isPublicExplicit; // Ok
 new SubClass().isProtected;
 // Error: Property 'isProtected' is protected and only accessible within class 'Base' and its subclasses.
 new SubClass().isPrivate;
+export {};
